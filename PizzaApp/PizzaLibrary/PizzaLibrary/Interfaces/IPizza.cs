@@ -1,7 +1,7 @@
 ﻿
 namespace PizzaLibrary.Interfaces
 {
-    interface IPizza
+    interface IPizza : IOrder
     {
 
         void DisplayPizza();
