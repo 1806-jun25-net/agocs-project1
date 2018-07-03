@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace PizzaLibrary.Interfaces
 {
-    interface IOrder
+    interface IOrder : IPizza
     {
         void DisplayOrder();
+        void OrderValid();
+
     }
 }

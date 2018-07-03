@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using PizzaLibrary.Interfaces;
 
 namespace PizzaLibrary.Interface
 {
-    interface ILocation
+    interface ILocation : IPizza
     {
         void DisplayLocation();
+        void LocationValid();
     }
 }

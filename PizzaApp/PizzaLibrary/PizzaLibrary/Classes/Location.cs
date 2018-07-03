@@ -1,13 +1,26 @@
-﻿using PizzaLibrary.Interfaces;
+﻿using PizzaLibrary.Interface;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PizzaLibrary.Classes
 {
-    class Location : IInventory
+    class Location : ILocation
     {
-        public void DisplayInventory()
+        public void DisplayLocation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisplayPizza()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LocationValid()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PizzaValid()
         {
             throw new NotImplementedException();
         }

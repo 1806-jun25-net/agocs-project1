@@ -1,7 +1,5 @@
 ﻿using PizzaLibrary.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PizzaLibrary.Classes
 {
@@ -16,6 +14,31 @@ namespace PizzaLibrary.Classes
                                              "\n Sauce: {4} " +
                                              "\n Dough: {5} \n", 
                                              pepperoni, onion, ham, cheese, sauce, dough);
+        }
+
+        public bool InventoryEmpty()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisplayLocation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LocationValid()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisplayPizza()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PizzaValid()
+        {
+            throw new NotImplementedException();
         }
 
         private int pepperoni { get; set; } = 500;

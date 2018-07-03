@@ -1,12 +1,9 @@
-﻿using PizzaLibrary.Interface;
-using PizzaLibrary.Interfaces;
+﻿using PizzaLibrary.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PizzaLibrary.Classes
 {
-    class User : IUser, ILocation, IOrder
+    class User : IUser
     {
 
         //user's complete name
@@ -14,18 +11,22 @@ namespace PizzaLibrary.Classes
         //user's order location with default order location as 'Reston, VA'
         public string UserLocation { get; set; } = "Reston, VA";
 
-
-        public void DisplayLocation()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DisplayOrder()
+        public void DisplayPizza()
         {
             throw new NotImplementedException();
         }
 
         public void DisplayUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PizzaValid()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UserValid()
         {
             throw new NotImplementedException();
         }
