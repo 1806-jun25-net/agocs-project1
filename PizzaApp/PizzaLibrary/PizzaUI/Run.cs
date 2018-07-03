@@ -4,15 +4,15 @@ using System.Text;
 
 namespace PizzaUI
 {
-    class Pizza
+    class Run
     {
 
         static void Main(string[] args)
         {
-            Run();
+            RunProgram();
         }
 
-        private static void Run()
+        private static void RunProgram()
         {
             throw new NotImplementedException();
         }
