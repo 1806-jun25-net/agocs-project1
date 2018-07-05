@@ -8,12 +8,13 @@ namespace PizzaApp
     {
 
         //Test instantiations
-        static List<List<Order>> masterList = new List<List<Order>>();
-        static List<Order> orderList = new List<Order>();
+        private static List<List<Order>> masterList = new List<List<Order>>();
+        private static List<Order> orderList = new List<Order>();
 
         static void Main(string[] args)
         {
-
+            //Test
+            LoadTestData(masterList);
             UIPrompt();
         }
 
@@ -32,8 +33,7 @@ namespace PizzaApp
         }
 
         private static void UIPromptChoice(string choice)
-        {
-
+        { 
             switch (choice)
             {
                 case "1":
@@ -49,7 +49,25 @@ namespace PizzaApp
                     SuggestedOrder(orderList);
                     break;
                 case "5":
-                    masterList.Add(CreateOrders());
+                    if (orderList.Count < 12)
+                    {
+                        masterList.Add(CreateOrders());
+
+                        foreach (var order in orderList)
+                        {
+                            if (!order.pizza.ValidPizzaOrder(order.pizza, orderList, order.pizza.ingredientCount))
+                            {
+                                Console.WriteLine("Error, a pizza order for " + order.user.UserName +
+                                                   " is too expensive!\n" +
+                                                   "Current price: " +
+                                                   order.pizza.CalculatePizzaCost(order.pizza.ingredientCount));
+                            }
+                        }
+                    }
+                    else if (orderList.Count > 12)
+                    {
+                        Console.WriteLine("You've ordered too much pizza. Sorry.");
+                    }
                     UIPrompt();
                     break;
                 case "6":
@@ -69,14 +87,16 @@ namespace PizzaApp
         }
 
         private static List<Order> CreateOrders()
-        {
-            Pizza p3 = new Pizza(true, false, true, false, 34.00);
+        { 
+            //Test order
+            Pizza p3 = new Pizza(1, 0, 1, 0, 34.00, 3);
             User u1 = new User("bob", "reston", DateTime.Now.AddDays(1));
             StoreLocation s = new StoreLocation();
             orderList.Add(new Order(u1, s, p3, DateTime.Now));
 
             Console.WriteLine("New order created!");
             Order.OrderString(p3, s, u1);
+            s.UseInventory(s, p3);
             Console.ReadLine();
 
             return orderList;
@@ -140,9 +160,9 @@ namespace PizzaApp
         private static List<List<Order>> LoadTestData(List<List<Order>> masterList)
         {
 
-            Pizza p1 = new Pizza(true, false, false, false, 12.20);
-            Pizza p2 = new Pizza(true, true, false, false, 50.00);
-            Pizza p3 = new Pizza(true, false, true, false, 34.00);
+            Pizza p1 = new Pizza(1, 0, 1, 1, 12.20, 3);
+            Pizza p2 = new Pizza(1, 1, 1, 1, 50.00, 1);
+            Pizza p3 = new Pizza(1, 0, 1, 0, 34.00, 2);
             User u1 = new User("bob", "reston", DateTime.Now.AddDays(1));
             User u2 = new User("jay", "dullas", DateTime.Now.AddHours(2));
             User u3 = new User("eric", "dullas", DateTime.Now.AddMinutes(90));

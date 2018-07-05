@@ -13,13 +13,37 @@ namespace PizzaLibrary.Classes
         public int Hotsauce { get; set; } = 32;
         public string Location { get; set; } = "reston";
 
-        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce, string city, string state)
+        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce, string city)
         {
             this.Pepperoni = pepperoni;
             this.Ham = ham;
             this.Sausage = sausage;
             this.Hotsauce = hotsauce;
             this.Location = city;
+        }
+
+
+        //test
+        public StoreLocation UseInventory(StoreLocation s, Pizza p)
+        {
+            if (p.hasHam == 1)
+            {
+                s.Ham--;
+            }
+            else if (p.hasPepperoni == 1)
+            {
+                s.Pepperoni--;
+            }
+            else if (p.hasSausage == 1)
+            {
+                s.Sausage--;
+            }
+            else if (p.hasHotsauce == 1)
+            {
+                s.Hotsauce--;
+            }
+
+            return s;
         }
 
         public void DisplayInventory()
@@ -30,6 +54,8 @@ namespace PizzaLibrary.Classes
                           "Hotsauce  : " + this.Hotsauce);
         }
 
+
+        //test
         public bool EmptyInventory(StoreLocation s)
         {
             int[] ingredients = {   this.Pepperoni,
@@ -68,7 +94,6 @@ namespace PizzaLibrary.Classes
             }
 
             return false;
-
         }
 
         public override string ToString()
