@@ -20,7 +20,7 @@ namespace PizzaApp
 
             //Temporary objects
             Pizza p = new Pizza(true, false, false, false, false);
-            User u = new User("bob", "reston", "md");
+            User u = new User("bob", "reston", "md", DateTime.Now.Hour);
             StoreLocation s = new StoreLocation();
             List<Order> orderList = new List<Order>();
             orderList.Add(new Order(u, s, p, DateTime.Now));
@@ -36,13 +36,13 @@ namespace PizzaApp
             foreach (var superList in orderDictionary)
             {
                 if (superList.Key == username)
-                {
+                { 
 
                     foreach (var subList in superList.Value)
                     {
                         Console.WriteLine("Order history for " + superList.Key + "\n"
-                                                              + subList.pizza.ToString() + "\n"
-                                                              + subList.user.ToString() + "\n");
+                                                               + subList.pizza.ToString() + "\n"
+                                                               + subList.user.ToString() + "\n");
                     }
 
                 }
@@ -52,9 +52,10 @@ namespace PizzaApp
 
         }
 
-        private static string LoadData(Dictionary<string, List<Order>> orderDictionary, Pizza p, User u, List<Order> orderList)
 
+        private static string LoadData(Dictionary<string, List<Order>> orderDictionary, Pizza p, User u, List<Order> orderList)
         {
+ 
 
             bool ordering = true;
             string username = "Unset";
@@ -79,15 +80,10 @@ namespace PizzaApp
                         case "n":
                             Console.WriteLine("Thank you for using the pizza app!");
                             ordering = false;
-                            break;
+                        break;
                         default: ordering = false;
-                            break;
-                    }
-
-
-
-
-                
+                        break;
+                    }  
             }
 
             return username;
@@ -105,58 +101,53 @@ namespace PizzaApp
                 Console.WriteLine("Please enter username and location in format 'username location state'");
                 string userNameLocationState = Console.ReadLine();
                 string[] userNameLocationStateArr = userNameLocationState.Split();
-                bool createUserFlag = true;
 
                 foreach (var list in dict)
                 {
 
-                if (userNameLocationStateArr[0] == list.Key)
+                if (dict.ContainsKey(userNameLocationStateArr[0]))
                 {
-                    createUserFlag = false;
                     user.UserName = list.Key;
                 }
 
-                else createUserFlag = true;
+                else {
+
+                    while (user.UserName != null)
+                    {
+
+                        //@DOHERE provide 'n' functionality
+                        Console.WriteLine("Welcome {0}!\nUser not found. Would you like to proceed with creating an account under {0}? 'y/n'", userNameLocationStateArr[0]);
+
+                        switch (Console.ReadLine())
+                        {
+                            case "y":
+
+                                Console.WriteLine(userNameLocationStateArr[0] + "'s account has been created.");
+                                user.UserName = userNameLocationStateArr[0];
+                                //Record userNameLocationStateArr
+                                break;
+                            case "n":
+
+                                Console.Write("Please enter a suitable username now: ");
+                                user.UserName = Console.ReadLine();
+                                Console.WriteLine(user.UserName + " account created!");
+                                break;
+                            default:
+                                Console.Write("Unknown '{0}'. Use y/n.", Console.ReadLine());
+                                break;
+                        }
+                    }
 
                 }
 
                 if (userNameLocationStateArr.Length < 3)
                 {
 
-                    Console.WriteLine("Unknown '{0}'. Use 'username location state'\n\n", userNameLocationStateArr[0]);
+                    Console.WriteLine("Unknown '{0}'. Use 'username location state'\n\nNow exiting.", userNameLocationStateArr[0]);
+                    Console.ReadLine();
+                    Environment.Exit(0);
                 }
 
-                while (createUserFlag)
-                {
-
-                    //@DOHERE provide 'n' functionality
-                    Console.WriteLine("Welcome {0}!\nUser not found. Would you like to proceed with creating an account under {0}? 'y/n'", userNameLocationStateArr[0]);
-
-                    switch (Console.ReadLine())
-                    {
-                        case "y":
-
-                            Console.WriteLine(userNameLocationStateArr[0] + "'s account has been created.");
-                            user.UserName = userNameLocationStateArr[0];
-                            createUserFlag = false;
-                            //Record userNameLocationStateArr
-                            break;
-                        case "n":
-
-                            Console.Write("Please enter a suitable username now: ");
-                            user.UserName = Console.ReadLine();
-                            Console.WriteLine(user.UserName + " account created!");
-                            createUserFlag = false;
-                            break;
-                        default:
-                            Console.Write("Unknown '{0}'. Use y/n.", Console.ReadLine());
-                            break;
-                    }
-
-
-                
-
-                bool createPizzaFlag = true;
                 Console.WriteLine("Welcome '{0}'!\nPlease choose your toppings.\n1: Pepperoni\n" +
                                                                 "2: Ham\n" +
                                                                 "3: Sausage\n" +
@@ -165,11 +156,7 @@ namespace PizzaApp
                 string toppingChoices = Console.ReadLine();
                 string[] userChoices = toppingChoices.Split();
 
-                while (createPizzaFlag)
-                {
-                    if (!loc.EmptyInventory(loc))
-                    {
-                        for (int i = 0; i < userChoices.Length; i++)
+                 for (int i = 0; i < userChoices.Length; i++)
                         {
                             switch (userChoices[i])
                             {
@@ -189,30 +176,13 @@ namespace PizzaApp
                                     loc.Hotsauce -= 1;
                                     pizza.hasHotsauce = true;
                                     break;
-
-                            }
-
-                            createPizzaFlag = false;
-                        }
+                        
+                            } 
+                    if (loc.EmptyInventory(loc) == true)
+                    {
+                        i = userChoices.Length;
                     }
-
                 }
-
-                try
-                {
-                    user.UserCity = userNameLocationStateArr[1];
-                    user.UserState = userNameLocationStateArr[2];
-
-                }
-
-                catch
-                {
-
-                    Console.WriteLine("Bad ingredient choice!");
-
-
-                }
-
             }
 
             Order order = new Order(user, loc, pizza, DateTime.Now);
@@ -227,17 +197,5 @@ namespace PizzaApp
 
         }
 
-        public class item
-        {
-            [XmlAttribute]
-            public string key;
-            [XmlAttribute]
-            public List<Order> listOrders;
-        }
-
-
     }
-
-
-
 }

@@ -7,10 +7,10 @@ namespace PizzaLibrary.Classes
 
         public StoreLocation() { }
 
-        public int Pepperoni { get; set; } = 1;
-        public int Ham { get; set; } = 1;
-        public int Sausage { get; set; } = 1;
-        public int Hotsauce { get; set; } = 1;
+        public int Pepperoni { get; set; } = 3;
+        public int Ham { get; set; } = 31;
+        public int Sausage { get; set; } = 3;
+        public int Hotsauce { get; set; } = 3;
         public string City { get; set; } = "reston";
         public string State { get; set; } = "va";
 

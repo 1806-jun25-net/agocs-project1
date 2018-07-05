@@ -12,26 +12,23 @@ namespace PizzaLibrary.Classes
         public User user;
         public StoreLocation loc;
         public Pizza pizza;
-        public DateTime OrderTime { get; set; }
 
         public Order(User user, StoreLocation loc, Pizza pizza, DateTime order)
         {
             this.user = user;
             this.loc = loc;
             this.pizza = pizza;
-            this.OrderTime = order;
+
         }
 
-        public override string ToString()
+        public Order(User user, StoreLocation loc, Pizza pizza)
         {
-            return $"{{{nameof(OrderTime)}={OrderTime}}}" +
-               this.user.ToString()   + "\n"
-              + this.pizza.ToString() + "\n"
-              + this.loc.City         + "\n" 
-              + this.loc.State;
+            this.user = user;
+            this.loc = loc;
+            this.pizza = pizza;
         }
 
-        
+      
     }
 
 }
