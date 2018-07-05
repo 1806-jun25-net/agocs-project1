@@ -7,12 +7,11 @@ namespace PizzaLibrary.Classes
 
         public StoreLocation() { }
 
-        public int Pepperoni { get; set; } = 3;
+        public int Pepperoni { get; set; } = 32;
         public int Ham { get; set; } = 31;
-        public int Sausage { get; set; } = 3;
-        public int Hotsauce { get; set; } = 3;
-        public string City { get; set; } = "reston";
-        public string State { get; set; } = "va";
+        public int Sausage { get; set; } = 32;
+        public int Hotsauce { get; set; } = 32;
+        public string Location { get; set; } = "reston";
 
         public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce, string city, string state)
         {
@@ -20,8 +19,7 @@ namespace PizzaLibrary.Classes
             this.Ham = ham;
             this.Sausage = sausage;
             this.Hotsauce = hotsauce;
-            this.City = city;
-            this.State = state;
+            this.Location = city;
         }
 
         public void DisplayInventory()
@@ -46,27 +44,26 @@ namespace PizzaLibrary.Classes
                     switch (i)
                     {
                         case 0:
-                            Console.Write("Pepperoni ");
+                            Console.Write("Pepperoni");
                             break;
                         case 1:
-                            Console.Write("Ham ");
+                            Console.Write("Ham");
                             break;
                         case 2:
-                            Console.Write("Sausage ");
+                            Console.Write("Sausage");
                             break;
                         case 3:
-                            Console.Write("Hot Sauce ");
+                            Console.Write("Hot Sauce");
                             break;
                         default:
-                            Console.Write("Unknown '{0}' reference.", ingredients[i]);
+                            Console.Write("Unknown '{0}' reference!", ingredients[i]);
                             break;
 
                     }
 
                     Console.Write(" is gone at this location! Cannot make that pizza.");
-                    return false;
+                    return true;
                 }
-
 
             }
 
@@ -76,7 +73,7 @@ namespace PizzaLibrary.Classes
 
         public override string ToString()
         {
-            return $"{{{nameof(Pepperoni)}={Pepperoni}, {nameof(Ham)}={Ham}, {nameof(Sausage)}={Sausage}, {nameof(Hotsauce)}={Hotsauce}, {nameof(City)}={City}, {nameof(State)}={State}}}";
+            return $"{{{nameof(Pepperoni)}={Pepperoni}, {nameof(Ham)}={Ham}, {nameof(Sausage)}={Sausage}, {nameof(Hotsauce)}={Hotsauce}, {nameof(Location)}={Location}}}";
         }
     }
 

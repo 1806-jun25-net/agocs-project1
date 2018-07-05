@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace PizzaLibrary.Classes
 {
@@ -7,7 +8,7 @@ namespace PizzaLibrary.Classes
 
         public Pizza() { }
 
-        public Pizza(bool hasPepperoni, bool hasHam, bool hasSausage, bool hasHotsauce, int price)
+        public Pizza(bool hasPepperoni, bool hasHam, bool hasSausage, bool hasHotsauce, double price)
         {
             this.hasPepperoni = hasPepperoni;
             this.hasHam = hasHam;
@@ -20,8 +21,38 @@ namespace PizzaLibrary.Classes
         public bool hasHam { get; set; } = false;
         public bool hasSausage { get; set; } = false;
         public bool hasHotsauce { get; set; } = false;
-        public int  price { get; set; }
+        public double price { get; set; } = 12.50;
 
+        public string calculatePizzaCost (int numIngredients)
+        {
+            return string.Format("{0:#.00}", Convert.ToDecimal(numIngredients * numIngredients));
+
+        }
+
+        public bool ValidPizza(Pizza p)
+        {
+            return (p.price > 500.00) ? false : true;
+        }
+
+        public Pizza changeTopping(Pizza p, StoreLocation s, string topping, bool remove)
+        {
+            switch (topping)
+            {
+                case "pepperoni":
+                    p.hasPepperoni = (remove) ? true : false;
+                    break;
+                case "sausage":
+                    p.hasSausage = (remove) ? true : false;
+                    break;
+                case "ham":
+                    p.hasHam = (remove) ? true : false;
+                    break;
+                case "hotsauce":
+                    p.hasHotsauce = (remove) ? true : false;
+                    break;
+            }
+            return p;
+        }
 
         public bool CheckStoreInventory(StoreLocation s)
         {

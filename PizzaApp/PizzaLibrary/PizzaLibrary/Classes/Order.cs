@@ -28,7 +28,13 @@ namespace PizzaLibrary.Classes
             this.pizza = pizza;
         }
 
-      
-    }
 
+        public static void OrderString(Pizza p, StoreLocation l, User u)
+        {
+            Console.WriteLine("Pizza ordered: " + p.ToString() + "\n" +
+                              "Location info: " + l.ToString() + "\n" +
+                              "User info    : " + u.ToString() + "\n");
+
+        }   
+    }
 }

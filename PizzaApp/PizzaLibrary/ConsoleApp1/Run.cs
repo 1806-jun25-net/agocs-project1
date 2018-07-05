@@ -11,191 +11,152 @@ namespace PizzaApp
     class App
     {
         static void Main(string[] args)
+        { 
+            UIPrompt();
+        }
+
+        private static void UIPrompt()
+        { 
+
+            Console.WriteLine("Welcome to the Pizza App!\nWhat would you like to do?\n" +
+                              "1. Search users by name.\n" +
+                              "2. Display all order history of a location (city name).\n" +
+                              "3. Display all order history of username.\n" +
+                              "4. Get a suggested order for a username.\n" +
+                              "5  Place an order under a username and location.\n" +
+                              "6. Display current order.\n");
+
+            UIPromptChoice(Console.ReadLine());
+        }
+
+        private static void UIPromptChoice(string choice)
         {
 
-            //@DOHERE unserialize dictionary
+            List<List<Order>> masterList = new List<List<Order>>();
+            masterList = LoadTestData(masterList);
 
-            //temp empty dict
-            Dictionary<string, List<Order>> orderDictionary = new Dictionary<string, List<Order>>();
+            switch (choice)
+            {
+                case "1":
+                    SearchUser(masterList);
+                    break;
+                case "2":
+                    DisplayHistoryFromLocation(masterList);
+                    break;
+                case "3":
+                    DisplayHistoryFromUser(masterList);
+                    break;
+                case "4":
+                    SuggestedOrder();
+                    break;
+                case "5":
+                    CreateOrder();
+                    break;
+                case "6":
+                    DisplayCurrentOrder();
+                    break;
+                default:
+                    Console.WriteLine("Unknown choice. Please try again.\n");
+                    UIPrompt();
+                    break;
+            }
 
-            //Temporary objects
-            Pizza p = new Pizza(true, false, false, false, false);
-            User u = new User("bob", "reston", "md", DateTime.Now.Hour);
-            StoreLocation s = new StoreLocation();
-            List<Order> orderList = new List<Order>();
-            orderList.Add(new Order(u, s, p, DateTime.Now));
-            orderList.Add(new Order(u, s, p, DateTime.Now.AddHours(4)));
+        }
 
-            //Temporary dict entries
-            orderDictionary.Add("bob", orderList);
-            orderDictionary.Add("reston", orderList);
-
-            Console.WriteLine("Welcome to the Pizza App! Enter a username or location if it already exists for history!");
+        private static void SearchUser(List<List<Order>> masterList)
+        {
+            Console.WriteLine("\nPlease enter a username to search.");
             string username = Console.ReadLine();
-
-            foreach (var superList in orderDictionary)
-            {
-                if (superList.Key == username)
-                { 
-
-                    foreach (var subList in superList.Value)
-                    {
-                        Console.WriteLine("Order history for " + superList.Key + "\n"
-                                                               + subList.pizza.ToString() + "\n"
-                                                               + subList.user.ToString() + "\n");
-                    }
-
-                }
-            }
-
-            LoadData(orderDictionary, p, u, orderList);
+            MasterList.SearchUser(masterList, username);
+            Console.ReadLine();
+            UIPrompt();
 
         }
 
-
-        private static string LoadData(Dictionary<string, List<Order>> orderDictionary, Pizza p, User u, List<Order> orderList)
-        {
- 
-
-            bool ordering = true;
-            string username = "Unset";
-
-            while (ordering)
-            {
-
-                    Console.WriteLine("Welcome to the Pizza App, press any key to continue.");
-
-
-                    orderList.Add(createOrderList(orderDictionary));
-
-                    Console.WriteLine("Do you want to order again? y/n");
-                    var response = Console.ReadLine();
-
-                    switch ((string)response)
-                    {
-
-                        case "y":
-                            ordering = true;
-                            break;
-                        case "n":
-                            Console.WriteLine("Thank you for using the pizza app!");
-                            ordering = false;
-                        break;
-                        default: ordering = false;
-                        break;
-                    }  
-            }
-
-            return username;
-        }
-
-        public static Order createOrderList(Dictionary<string, List<Order>> dict)
+        private static void SuggestedOrder()
         {
 
-            User user = new User();
-            Order o = new Order();
-            StoreLocation loc = new StoreLocation();
-            Pizza pizza = new Pizza();
+        }
 
+        private static void DisplayHistoryFromUser(List<List<Order>> masterList)
+        {
+            Console.WriteLine("\nPlease enter a username to return all orders made.");
+            string location = Console.ReadLine();
+            MasterList.AllOrdersInUser(masterList, location);
 
-                Console.WriteLine("Please enter username and location in format 'username location state'");
-                string userNameLocationState = Console.ReadLine();
-                string[] userNameLocationStateArr = userNameLocationState.Split();
-
-                foreach (var list in dict)
-                {
-
-                if (dict.ContainsKey(userNameLocationStateArr[0]))
-                {
-                    user.UserName = list.Key;
-                }
-
-                else {
-
-                    while (user.UserName != null)
-                    {
-
-                        //@DOHERE provide 'n' functionality
-                        Console.WriteLine("Welcome {0}!\nUser not found. Would you like to proceed with creating an account under {0}? 'y/n'", userNameLocationStateArr[0]);
-
-                        switch (Console.ReadLine())
-                        {
-                            case "y":
-
-                                Console.WriteLine(userNameLocationStateArr[0] + "'s account has been created.");
-                                user.UserName = userNameLocationStateArr[0];
-                                //Record userNameLocationStateArr
-                                break;
-                            case "n":
-
-                                Console.Write("Please enter a suitable username now: ");
-                                user.UserName = Console.ReadLine();
-                                Console.WriteLine(user.UserName + " account created!");
-                                break;
-                            default:
-                                Console.Write("Unknown '{0}'. Use y/n.", Console.ReadLine());
-                                break;
-                        }
-                    }
-
-                }
-
-                if (userNameLocationStateArr.Length < 3)
-                {
-
-                    Console.WriteLine("Unknown '{0}'. Use 'username location state'\n\nNow exiting.", userNameLocationStateArr[0]);
-                    Console.ReadLine();
-                    Environment.Exit(0);
-                }
-
-                Console.WriteLine("Welcome '{0}'!\nPlease choose your toppings.\n1: Pepperoni\n" +
-                                                                "2: Ham\n" +
-                                                                "3: Sausage\n" +
-                                                                "4: Hotsauce\n", userNameLocationStateArr[0]);
-
-                string toppingChoices = Console.ReadLine();
-                string[] userChoices = toppingChoices.Split();
-
-                 for (int i = 0; i < userChoices.Length; i++)
-                        {
-                            switch (userChoices[i])
-                            {
-                                case "1":
-                                    loc.Pepperoni -= 1;
-                                    pizza.hasPepperoni = true;
-                                    break;
-                                case "2":
-                                    loc.Ham -= 1;
-                                    pizza.hasHam = true;
-                                    break;
-                                case "3":
-                                    loc.Sausage -= 1;
-                                    pizza.hasSausage = true;
-                                    break;
-                                case "4":
-                                    loc.Hotsauce -= 1;
-                                    pizza.hasHotsauce = true;
-                                    break;
-                        
-                            } 
-                    if (loc.EmptyInventory(loc) == true)
-                    {
-                        i = userChoices.Length;
-                    }
-                }
-            }
-
-            Order order = new Order(user, loc, pizza, DateTime.Now);
-
-            Console.WriteLine("New order created!\n" +
-                              "Details: \n" +
-                              order.user.ToString() +
-                              order.pizza.ToString() + "\nTime created: " +
-                              DateTime.Now + "\n");
-
-            return order;
+            Console.ReadLine();
+            UIPrompt();
 
         }
 
+        private static void DisplayHistoryFromLocation(List<List<Order>> masterList)
+        {
+            Console.WriteLine("\nPlease enter a location to return all orders made.");
+            string location = Console.ReadLine();
+            MasterList.AllOrdersInLocation(masterList, location);
+
+            Console.ReadLine();
+            UIPrompt();
+
+        }
+
+        private static void DisplayCurrentOrder()
+        {
+
+        }
+
+        private static Order CreateOrder()
+        {
+
+            return new Order();
+        }
+
+        private void Serialize(List<Order> order)
+        {
+            //Temporary objects
+
+
+        }
+
+        private List<Order> Deserialize()
+        {
+
+
+            return new List<Order>();
+
+        }
+
+        private static List<List<Order>> LoadTestData(List<List<Order>> masterList)
+        {
+
+            Pizza p1 = new Pizza(true, false, false, false, 12.20);
+            Pizza p2 = new Pizza(true, true, false, false, 50.00);
+            Pizza p3 = new Pizza(true, false, true, false, 34.00);
+            User u1 = new User("bob", "reston", DateTime.Now.AddDays(1));
+            User u2 = new User("jay", "dullas", DateTime.Now.AddHours(2));
+            User u3 = new User("eric", "dullas", DateTime.Now.AddMinutes(90));
+            User u4 = new User("carl", "jupiter", DateTime.Now.AddMinutes(90));
+
+
+            StoreLocation s = new StoreLocation();
+            List<Order> userOrders1 = new List<Order>();
+            List<Order> userOrders2 = new List<Order>();
+            List<Order> userOrders3 = new List<Order>();
+
+            userOrders1.Add(new Order(u1, s, p3, DateTime.Now));
+            userOrders2.Add(new Order(u3, s, p2, DateTime.Now.AddHours(4)));
+            userOrders2.Add(new Order(u4, s, p2, DateTime.Now.AddHours(4)));
+            userOrders2.Add(new Order(u3, s, p2, DateTime.Now.AddHours(4)));
+            userOrders3.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
+            userOrders2.Add(new Order(u4, s, p1, DateTime.Now.AddHours(1)));
+            userOrders1.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
+            userOrders2.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
+
+            masterList.Add(userOrders1);
+            masterList.Add(userOrders2);
+            masterList.Add(userOrders3);
+
+            return masterList;
+        }
     }
 }
