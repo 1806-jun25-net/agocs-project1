@@ -2,7 +2,7 @@
 
 namespace PizzaLibrary.Classes
 {
-    public class StoreLocation
+    public class StoreLocation : IStoreLocation
     {
 
         public StoreLocation() { }

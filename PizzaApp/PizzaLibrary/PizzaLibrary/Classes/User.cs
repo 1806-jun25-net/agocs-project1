@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace PizzaLibrary.Classes
 {
-    public class User
+    public class User : IUser
     {
 
         public User() { }
@@ -29,7 +28,7 @@ namespace PizzaLibrary.Classes
 
         public override string ToString()
         {
-            return $"{{{nameof(UserName)}={UserName}, {nameof(UserCity)}={UserCity}, {nameof(OrderTime)}={OrderTime + ":00"}}}";
+            return $"{{{nameof(UserName)}={UserName}, {nameof(UserCity)}={UserCity}, {nameof(OrderTime)}={OrderTime}}}";
         }
     }
    }

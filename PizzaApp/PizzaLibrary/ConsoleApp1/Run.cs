@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using PizzaLibrary.Classes;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace PizzaApp
 {
     class App
     {
+
+        //Test instantiations
+        static List<List<Order>> masterList = new List<List<Order>>();
+        static List<Order> orderList = new List<Order>();
+
         static void Main(string[] args)
-        { 
+        {
+
             UIPrompt();
         }
 
@@ -32,9 +34,6 @@ namespace PizzaApp
         private static void UIPromptChoice(string choice)
         {
 
-            List<List<Order>> masterList = new List<List<Order>>();
-            masterList = LoadTestData(masterList);
-
             switch (choice)
             {
                 case "1":
@@ -47,13 +46,14 @@ namespace PizzaApp
                     DisplayHistoryFromUser(masterList);
                     break;
                 case "4":
-                    SuggestedOrder();
+                    SuggestedOrder(orderList);
                     break;
                 case "5":
-                    CreateOrder();
+                    masterList.Add(CreateOrders());
+                    UIPrompt();
                     break;
                 case "6":
-                    DisplayCurrentOrder();
+                    DisplayCurrentOrder(orderList);
                     break;
                 default:
                     Console.WriteLine("Unknown choice. Please try again.\n");
@@ -63,26 +63,41 @@ namespace PizzaApp
 
         }
 
+        private static void SuggestedOrder(List<Order> masterList)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static List<Order> CreateOrders()
+        {
+            Pizza p3 = new Pizza(true, false, true, false, 34.00);
+            User u1 = new User("bob", "reston", DateTime.Now.AddDays(1));
+            StoreLocation s = new StoreLocation();
+            orderList.Add(new Order(u1, s, p3, DateTime.Now));
+
+            Console.WriteLine("New order created!");
+            Order.OrderString(p3, s, u1);
+            Console.ReadLine();
+
+            return orderList;
+        }
+
         private static void SearchUser(List<List<Order>> masterList)
         {
             Console.WriteLine("\nPlease enter a username to search.");
             string username = Console.ReadLine();
             MasterList.SearchUser(masterList, username);
+
             Console.ReadLine();
             UIPrompt();
-
-        }
-
-        private static void SuggestedOrder()
-        {
 
         }
 
         private static void DisplayHistoryFromUser(List<List<Order>> masterList)
         {
             Console.WriteLine("\nPlease enter a username to return all orders made.");
-            string location = Console.ReadLine();
-            MasterList.AllOrdersInUser(masterList, location);
+            string username = Console.ReadLine();
+            MasterList.AllOrdersInUser(masterList, username);
 
             Console.ReadLine();
             UIPrompt();
@@ -100,15 +115,14 @@ namespace PizzaApp
 
         }
 
-        private static void DisplayCurrentOrder()
+        private static void DisplayCurrentOrder(List<Order> currentUserOrderList)
         {
-
-        }
-
-        private static Order CreateOrder()
-        {
-
-            return new Order();
+            foreach (var orders in currentUserOrderList)
+            {
+                Order.UserOrderString(orders.pizza, orders.user);
+            }
+            Console.ReadLine();
+            UIPrompt();
         }
 
         private void Serialize(List<Order> order)
@@ -120,10 +134,7 @@ namespace PizzaApp
 
         private List<Order> Deserialize()
         {
-
-
-            return new List<Order>();
-
+            return null;
         }
 
         private static List<List<Order>> LoadTestData(List<List<Order>> masterList)
@@ -141,21 +152,17 @@ namespace PizzaApp
             StoreLocation s = new StoreLocation();
             List<Order> userOrders1 = new List<Order>();
             List<Order> userOrders2 = new List<Order>();
-            List<Order> userOrders3 = new List<Order>();
 
-            userOrders1.Add(new Order(u1, s, p3, DateTime.Now));
-            userOrders2.Add(new Order(u3, s, p2, DateTime.Now.AddHours(4)));
-            userOrders2.Add(new Order(u4, s, p2, DateTime.Now.AddHours(4)));
-            userOrders2.Add(new Order(u3, s, p2, DateTime.Now.AddHours(4)));
-            userOrders3.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
-            userOrders2.Add(new Order(u4, s, p1, DateTime.Now.AddHours(1)));
-            userOrders1.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
-            userOrders2.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
+            orderList.Add(new Order(u1, s, p3, DateTime.Now));
+            orderList.Add(new Order(u3, s, p2, DateTime.Now.AddHours(4)));
+            orderList.Add(new Order(u4, s, p2, DateTime.Now.AddHours(4)));
+            orderList.Add(new Order(u3, s, p2, DateTime.Now.AddHours(4)));
+            orderList.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
+            orderList.Add(new Order(u4, s, p1, DateTime.Now.AddHours(1)));
+            orderList.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
+            orderList.Add(new Order(u2, s, p1, DateTime.Now.AddHours(1)));
 
-            masterList.Add(userOrders1);
-            masterList.Add(userOrders2);
-            masterList.Add(userOrders3);
-
+            masterList.Add(orderList);
             return masterList;
         }
     }

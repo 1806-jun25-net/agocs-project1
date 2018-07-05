@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace PizzaLibrary.Classes
 {
-    public class Pizza
+    public class Pizza : IPizza
     {
 
         public Pizza() { }
@@ -23,7 +23,7 @@ namespace PizzaLibrary.Classes
         public bool hasHotsauce { get; set; } = false;
         public double price { get; set; } = 12.50;
 
-        public string calculatePizzaCost (int numIngredients)
+        public string CalculatePizzaCost (int numIngredients)
         {
             return string.Format("{0:#.00}", Convert.ToDecimal(numIngredients * numIngredients));
 
@@ -34,7 +34,7 @@ namespace PizzaLibrary.Classes
             return (p.price > 500.00) ? false : true;
         }
 
-        public Pizza changeTopping(Pizza p, StoreLocation s, string topping, bool remove)
+        public Pizza ChangeTopping(Pizza p, StoreLocation s, string topping, bool remove)
         {
             switch (topping)
             {
@@ -63,8 +63,7 @@ namespace PizzaLibrary.Classes
 
         public override string ToString()
         {
-            return $"{{{nameof(hasPepperoni)}={hasPepperoni}, {nameof(hasHam)}={hasHam}, {nameof(hasSausage)}={hasSausage}, {nameof(hasHotsauce)}={hasHotsauce}}}";
+            return $"{{{nameof(hasPepperoni)}={hasPepperoni}, {nameof(hasHam)}={hasHam}, {nameof(hasSausage)}={hasSausage}, {nameof(hasHotsauce)}={hasHotsauce}, {nameof(price)}={price}}}";
         }
-
     }
 }
