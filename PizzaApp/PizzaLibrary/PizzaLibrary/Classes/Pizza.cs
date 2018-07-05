@@ -1,29 +1,37 @@
-﻿using PizzaLibrary.Interfaces;
-using System;
+﻿using System;
 
 namespace PizzaLibrary.Classes
 {
-    class Pizza : IPizza
+    public class Pizza
     {
-        public void DisplayOrder()
+
+        public Pizza() { }
+
+        public Pizza(bool inventoryavailableForPizza, bool hasPepperoni, bool hasHam, bool hasSausage, bool hasHotsauce)
         {
-            throw new NotImplementedException();
+            this.hasPepperoni = hasPepperoni;
+            this.hasHam = hasHam;
+            this.hasSausage = hasSausage;
+            this.hasHotsauce = hasHotsauce;
         }
 
-        public void DisplayPizza()
+        public bool hasPepperoni { get; set; } = false;
+        public bool hasHam { get; set; } = false;
+        public bool hasSausage { get; set; } = false;
+        public bool hasHotsauce { get; set; } = false;
+
+
+        public bool CheckStoreInventory(StoreLocation s)
         {
-            throw new NotImplementedException();
-           
+
+            return s.EmptyInventory(s);
+
         }
 
-        public void OrderValid()
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return $"{{{nameof(hasPepperoni)}={hasPepperoni}, {nameof(hasHam)}={hasHam}, {nameof(hasSausage)}={hasSausage}, {nameof(hasHotsauce)}={hasHotsauce}}}";
         }
 
-        public bool PizzaValid()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

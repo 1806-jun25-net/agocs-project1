@@ -1,44 +1,32 @@
-﻿using PizzaLibrary.Interfaces;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PizzaLibrary.Classes
 {
-    class User : IUser
+    public class User
     {
 
+        public User() { }
+
         //user's complete name
-        public string UserFullName { get; set; }
-        //user's order location with default order location as 'Reston, VA'
-        public string UserLocation { get; set; } = "Reston, VA";
+        public string UserName { get; set; }
+        //user's order location with default order location as 'va'
+        public string UserState { get; set; } = "va";
+        public string UserCity { get; set; } = "reston";
+        
 
-        public void DisplayOrder()
+        public User(string userName, string userState, string userCity)
         {
-            throw new NotImplementedException();
+            UserName = userName;
+            UserState = userState;
+            UserCity = userCity;
+
         }
 
-        public void DisplayPizza()
+        public override string ToString()
         {
-            throw new NotImplementedException();
-        }
-
-        public void DisplayUser()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OrderValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool PizzaValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UserValid()
-        {
-            throw new NotImplementedException();
+            return $"{{{nameof(UserName)}={UserName}, {nameof(UserState)}={UserState}, {nameof(UserCity)}={UserCity}}}";
         }
     }
+
 }

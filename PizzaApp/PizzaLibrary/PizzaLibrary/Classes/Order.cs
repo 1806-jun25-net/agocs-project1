@@ -1,28 +1,37 @@
-﻿using PizzaLibrary.Interfaces;
+﻿using PizzaLibrary;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace PizzaLibrary.Classes
 {
-    class Order : IOrder
+    public class Order
     {
-        public void DisplayOrder()
+        public Order() { }
+
+        public User user;
+        public StoreLocation loc;
+        public Pizza pizza;
+        public DateTime OrderTime { get; set; }
+
+        public Order(User user, StoreLocation loc, Pizza pizza, DateTime order)
         {
-            throw new NotImplementedException();
+            this.user = user;
+            this.loc = loc;
+            this.pizza = pizza;
+            this.OrderTime = order;
         }
 
-        public void DisplayPizza()
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return $"{{{nameof(OrderTime)}={OrderTime}}}" +
+               this.user.ToString()   + "\n"
+              + this.pizza.ToString() + "\n"
+              + this.loc.City         + "\n" 
+              + this.loc.State;
         }
 
-        public void OrderValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool PizzaValid()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
+
 }

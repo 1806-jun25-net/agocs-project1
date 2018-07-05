@@ -1,73 +1,83 @@
-﻿using PizzaLibrary.Interface;
-using System;
+﻿using System;
 
 namespace PizzaLibrary.Classes
 {
-    class StoreLocation : IStoreLocation
+    public class StoreLocation
     {
-        private int pepperoni { get; set; } = 500;
-        private int onion { get; set; } = 500;
-        private int ham { get; set; } = 500;
-        private int cheese { get; set; } = 500;
-        private int sauce { get; set; } = 500;
-        private int dough { get; set; } = 500;
 
-        //Displays
+        public StoreLocation() { }
+
+        public int Pepperoni { get; set; } = 1;
+        public int Ham { get; set; } = 1;
+        public int Sausage { get; set; } = 1;
+        public int Hotsauce { get; set; } = 1;
+        public string City { get; set; } = "reston";
+        public string State { get; set; } = "va";
+
+        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce, string city, string state)
+        {
+            this.Pepperoni = pepperoni;
+            this.Ham = ham;
+            this.Sausage = sausage;
+            this.Hotsauce = hotsauce;
+            this.City = city;
+            this.State = state;
+        }
+
         public void DisplayInventory()
         {
-            Console.Write("Current inventory: Pepperoni: {0} " +
-                                            "\n Onion: {1}" +
-                                            "\n Ham: {2} " +
-                                            "\n Cheese: {3} " +
-                                            "\n Sauce: {4} " +
-                                            "\n Dough: {5} \n",
-                                            pepperoni, onion, ham, cheese, sauce, dough);
+            Console.Write("Pepperoni : " + this.Pepperoni +
+                          "Ham       : " + this.Ham +
+                          "Sausage   : " + this.Sausage +
+                          "Hotsauce  : " + this.Hotsauce);
         }
 
-        public void DisplayLocation()
+        public bool EmptyInventory(StoreLocation s)
         {
-            throw new NotImplementedException();
+            int[] ingredients = {   this.Pepperoni,
+                                    this.Ham,
+                                    this.Sausage,
+                                    this.Hotsauce };
+
+            for (int i = 0; i < ingredients.Length; i++)
+            {
+                if (ingredients[i].Equals(0))
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            Console.Write("Pepperoni ");
+                            break;
+                        case 1:
+                            Console.Write("Ham ");
+                            break;
+                        case 2:
+                            Console.Write("Sausage ");
+                            break;
+                        case 3:
+                            Console.Write("Hot Sauce ");
+                            break;
+                        default:
+                            Console.Write("Unknown '{0}' reference.", ingredients[i]);
+                            break;
+
+                    }
+
+                    Console.Write(" is gone at this location! Cannot make that pizza.");
+                    return false;
+                }
+
+
+            }
+
+            return false;
+
         }
 
-        public void DisplayOrder()
+        public override string ToString()
         {
-            throw new NotImplementedException();
-        }
-
-        public void DisplayPizza()
-        {
-            throw new NotImplementedException();
-        }
-
-        //inventory is available for creating pizza
-        public bool InventoryValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        //location exists check
-        public void LocationValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        //The order has all prerequesites 
-        public void OrderValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        //The pizza has ingredient(s) that are out of stock or not an option
-        public bool PizzaValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        //The store location does not map to anything [in xml]
-        bool IStoreLocation.LocationValid()
-        {
-            throw new NotImplementedException();
-
+            return $"{{{nameof(Pepperoni)}={Pepperoni}, {nameof(Ham)}={Ham}, {nameof(Sausage)}={Sausage}, {nameof(Hotsauce)}={Hotsauce}, {nameof(City)}={City}, {nameof(State)}={State}}}";
         }
     }
+
 }
