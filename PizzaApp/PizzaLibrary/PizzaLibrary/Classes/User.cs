@@ -2,7 +2,7 @@
 
 namespace PizzaLibrary.Classes
 {
-    public class User : IUser
+    public class User
     {
 
         public User() { }

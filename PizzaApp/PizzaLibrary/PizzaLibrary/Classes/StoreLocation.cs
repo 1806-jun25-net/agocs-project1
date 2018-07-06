@@ -2,13 +2,13 @@
 
 namespace PizzaLibrary.Classes
 {
-    public class StoreLocation : IStoreLocation
+    public class StoreLocation
     {
 
         public StoreLocation() { }
 
         public int Pepperoni { get; set; } = 32;
-        public int Ham { get; set; } = 31;
+        public int Ham { get; set; } = 32;
         public int Sausage { get; set; } = 32;
         public int Hotsauce { get; set; } = 32;
         public string Location { get; set; } = "reston";
@@ -56,7 +56,7 @@ namespace PizzaLibrary.Classes
 
 
         //test
-        public bool EmptyInventory(StoreLocation s)
+        public bool CheckIfEmptyInventory(StoreLocation s)
         {
             int[] ingredients = {   this.Pepperoni,
                                     this.Ham,

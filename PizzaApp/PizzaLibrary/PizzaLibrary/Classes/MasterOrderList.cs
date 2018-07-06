@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PizzaLibrary.Classes
 {
-    public class MasterList
+    public class MasterOrderList
     {
         //test
         public static void AllOrdersInLocation(List<List<Order>> masterlist, string location)
@@ -15,16 +15,16 @@ namespace PizzaLibrary.Classes
                 Console.WriteLine("Error: empty masterlist.");
             }
 
-            foreach (var listorder in masterlist)
+            foreach (var superList in masterlist)
             {
 
-                foreach(var list in listorder)
+                foreach(var subList in superList)
                 {
 
-                    if (list.user.UserCity == location)
+                    if (subList.user.UserCity == location)
                     {
 
-                        Order.OrderString(list.pizza, list.loc, list.user);
+                        Order.OrderString(subList.pizza, subList.loc, subList.user);
 
                     }
                 }
@@ -92,7 +92,7 @@ namespace PizzaLibrary.Classes
                 }
             }
 
-            if (!founduser)
+            if(!founduser)
             {
                 Console.WriteLine("Sorry, user was not found.\n");
             }

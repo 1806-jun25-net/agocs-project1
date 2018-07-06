@@ -21,14 +21,6 @@ namespace PizzaLibrary.Classes
 
         }
 
-        public Order(User user, StoreLocation loc, Pizza pizza)
-        {
-            this.user = user;
-            this.loc = loc;
-            this.pizza = pizza;
-        }
-
-
         public static void OrderString(Pizza p, StoreLocation l, User u)
         {
             Console.WriteLine("Pizza ordered: " + p.ToString() + "\n" +

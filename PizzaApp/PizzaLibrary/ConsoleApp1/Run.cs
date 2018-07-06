@@ -55,11 +55,11 @@ namespace PizzaApp
 
                         foreach (var order in orderList)
                         {
-                            if (!order.pizza.ValidPizzaOrder(order.pizza, orderList, order.pizza.ingredientCount))
+                            if (!order.pizza.ValidPizzaOrder(order.pizza, orderList))
                             {
                                 Console.WriteLine("Error, a pizza order for " + order.user.UserName +
                                                    " is too expensive!\n" +
-                                                   "Current price: " +
+                                                   "Current price: $" +
                                                    order.pizza.CalculatePizzaCost(order.pizza.ingredientCount));
                             }
                         }
@@ -106,7 +106,7 @@ namespace PizzaApp
         {
             Console.WriteLine("\nPlease enter a username to search.");
             string username = Console.ReadLine();
-            MasterList.SearchUser(masterList, username);
+            MasterOrderList.SearchUser(masterList, username);
 
             Console.ReadLine();
             UIPrompt();
@@ -117,7 +117,7 @@ namespace PizzaApp
         {
             Console.WriteLine("\nPlease enter a username to return all orders made.");
             string username = Console.ReadLine();
-            MasterList.AllOrdersInUser(masterList, username);
+            MasterOrderList.AllOrdersInUser(masterList, username);
 
             Console.ReadLine();
             UIPrompt();
@@ -128,7 +128,7 @@ namespace PizzaApp
         {
             Console.WriteLine("\nPlease enter a location to return all orders made.");
             string location = Console.ReadLine();
-            MasterList.AllOrdersInLocation(masterList, location);
+            MasterOrderList.AllOrdersInLocation(masterList, location);
 
             Console.ReadLine();
             UIPrompt();

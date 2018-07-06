@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLibrary", "PizzaLibrar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaConsole", "ConsoleApp1\PizzaConsole.csproj", "{1A896A03-CAFA-480F-9563-6E69AE412C54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject2", "XUnitTestProject2\XUnitTestProject2.csproj", "{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

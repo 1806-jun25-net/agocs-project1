@@ -9,44 +9,50 @@ namespace PizzaLibrary.Classes
 
         public Pizza() { }
 
-        public Pizza(int hasPepperoni, int hasHam, int hasSausage, int hasHotsauce, double basePrice, int ingredientCount)
+        public Pizza(int hasPepperoni, int hasHam, int hasSausage, int hasHotsauce, double price, int ingredientCount)
         {
             this.hasPepperoni = hasPepperoni;
             this.hasHam = hasHam;
             this.hasSausage = hasSausage;
             this.hasHotsauce = hasHotsauce;
-            this.price = basePrice;
+            this.price = price;
             this.ingredientCount = ingredientCount;
         }
 
-        public int hasPepperoni { get; set; } = 1;
-        public int hasHam { get; set; } = 1;
-        public int hasSausage { get; set; } = 1;
-        public int hasHotsauce { get; set; } = 1;
+        //If hasX = 1, then 'has', else has not
+        public int hasPepperoni { get; set; } = 0;
+        public int hasHam { get; set; } = 0;
+        public int hasSausage { get; set; } = 0;
+        public int hasHotsauce { get; set; } = 0;
         public double price { get; set; } = 12.50;
         public int ingredientCount { get; set; } = 0;
         public const int INGREDIENTAMOUNTMAX = 4;
 
         //test
-        public string CalculatePizzaCost (int numIngredients)
+        public double CalculatePizzaCost (int numIngredients)
         {
-            return string.Format("{0:#.00}", Convert.ToDecimal(this.ingredientCount * this.price));
+            return numIngredients * this.price;
 
         }
 
         //test
-        public bool ValidPizzaOrder(Pizza p, List<Order> orderlist, int ingredientAmount)
+        public bool ValidPizzaOrder(Pizza p, List<Order> orderlist)
         {
+            if (p.ingredientCount > INGREDIENTAMOUNTMAX)
+            {
+                Console.WriteLine("Error: too many toppings!");
+            }
+
+            else if (orderlist.Count <= 0)
+            {
+                Console.WriteLine("Error: user order list is empty.");
+            }
+
             double price = 0.00;
 
             foreach (var order in orderlist)
             {
-                price += (order.pizza.price + ingredientAmount);
-            }
-
-            if(ingredientAmount > INGREDIENTAMOUNTMAX)
-            {
-                Console.WriteLine("Error: too many toppings!");
+                price += (p.CalculatePizzaCost(p.ingredientCount));
             }
 
             return (price > 500.00) ? false : true;
@@ -59,6 +65,7 @@ namespace PizzaLibrary.Classes
             {
                 case "pepperoni":
                     p.hasPepperoni = (remove == 1) ? 0 : 1;
+                    
                     break;
                 case "sausage":
                     p.hasSausage = (remove == 1) ? 0 : 1;
@@ -69,7 +76,12 @@ namespace PizzaLibrary.Classes
                 case "hotsauce":
                     p.hasHotsauce = (remove == 1) ? 0 : 1;
                     break;
+                default: Console.WriteLine("Error, invalid topping.\n");
+                    break;
             }
+
+            //Simulate "using the inventory" from target store.
+            s.UseInventory(s, p);
             return p;
         }
 
@@ -77,7 +89,7 @@ namespace PizzaLibrary.Classes
         public bool CheckStoreInventory(StoreLocation s)
         {
 
-            return s.EmptyInventory(s);
+            return s.CheckIfEmptyInventory(s);
 
         }
 
