@@ -7,25 +7,27 @@ namespace PizzaLibrary.Classes
 
         public StoreLocation() { }
 
+        //At least 32 pizzas per store location can be made
         public int Pepperoni { get; set; } = 32;
         public int Ham { get; set; } = 32;
         public int Sausage { get; set; } = 32;
         public int Hotsauce { get; set; } = 32;
         public string Location { get; set; } = "reston";
 
-        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce, string city)
+        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce)
         {
             this.Pepperoni = pepperoni;
             this.Ham = ham;
             this.Sausage = sausage;
             this.Hotsauce = hotsauce;
-            this.Location = city;
         }
 
 
         //test
         public StoreLocation UseInventory(StoreLocation s, Pizza p)
         {
+            //if a pizza has an ingredient, "use" that ingredient at target store
+            //using discrete units of 'one'
             if (p.hasHam == 1)
             {
                 s.Ham--;
@@ -57,7 +59,8 @@ namespace PizzaLibrary.Classes
 
         //test
         public bool CheckIfEmptyInventory(StoreLocation s)
-        {
+        { 
+
             int[] ingredients = {   this.Pepperoni,
                                     this.Ham,
                                     this.Sausage,
@@ -98,7 +101,7 @@ namespace PizzaLibrary.Classes
 
         public override string ToString()
         {
-            return $"{{{nameof(Pepperoni)}={Pepperoni}, {nameof(Ham)}={Ham}, {nameof(Sausage)}={Sausage}, {nameof(Hotsauce)}={Hotsauce}, {nameof(Location)}={Location}}}";
+            return $"{{{nameof(Pepperoni)}={Pepperoni}, {nameof(Ham)}={Ham}, {nameof(Sausage)}={Sausage}, {nameof(Hotsauce)}={Hotsauce}}}";
         }
     }
 

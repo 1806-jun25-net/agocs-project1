@@ -9,6 +9,7 @@ namespace PizzaLibrary.Classes
         //test
         public static void AllOrdersInLocation(List<List<Order>> masterlist, string location)
         {
+            bool orderLocationFound = false;
 
             if (masterlist.Count <= 0)
             {
@@ -25,13 +26,26 @@ namespace PizzaLibrary.Classes
                     {
 
                         Order.OrderString(subList.pizza, subList.loc, subList.user);
-
+                        orderLocationFound = true;
                     }
                 }
 
                
             }
+
+            if (!orderLocationFound)
+            {
+                Console.WriteLine("\nSorry. That location was not found!");
+            }
         }
+
+
+        //test
+        public static bool NumberOfOrdersValid(int orders)
+        {
+            return (orders > 12) ? false : true;
+        }
+
 
         //test
         public static void AllOrdersInUser(List<List<Order>> masterlist, string user)
@@ -68,7 +82,42 @@ namespace PizzaLibrary.Classes
         }
 
         //test
-        public static void SearchUser(List<List<Order>> masterlist, string user)
+        public static bool SearchLocation(List<List<Order>> masterlist, string location)
+        {
+            bool foundlocation = false;
+
+            if (masterlist.Count <= 0)
+            {
+                Console.WriteLine("Error: empty masterlist.");
+            }
+
+            foreach (var sublist in masterlist)
+            {
+
+                for (int i = 0; i < sublist.Count; i++)
+                {
+                    foreach (var suborder in sublist)
+                    {
+                        if (location == suborder.user.UserCity)
+                        {
+                            foundlocation = true;
+                        }
+                    }
+                }
+            }
+
+            if (!foundlocation)
+            {
+                Console.WriteLine("Sorry, location was not found.\n");
+                return foundlocation;
+            }
+
+            return foundlocation;
+
+        }
+
+        //test
+        public static bool SearchUser(List<List<Order>> masterlist, string user)
         {
             bool founduser = false;
 
@@ -92,12 +141,13 @@ namespace PizzaLibrary.Classes
                 }
             }
 
-            if(!founduser)
+            if (!founduser)
             {
                 Console.WriteLine("Sorry, user was not found.\n");
+                return founduser;
             }
 
-            else Console.WriteLine("User found.\n");
+            else return founduser;
 
         }
     }

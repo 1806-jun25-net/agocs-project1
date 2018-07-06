@@ -38,27 +38,48 @@ namespace PizzaLibrary.Classes
         //test
         public bool ValidPizzaOrder(Pizza p, List<Order> orderlist)
         {
+
+            bool validOrder = false;
+
             if (p.ingredientCount > INGREDIENTAMOUNTMAX)
             {
                 Console.WriteLine("Error: too many toppings!");
+                validOrder = false;
             }
 
-            else if (orderlist.Count <= 0)
+            else if (orderlist.Count == 0)
             {
-                Console.WriteLine("Error: user order list is empty.");
+                validOrder = true;
             }
 
             double price = 0.00;
 
-            foreach (var order in orderlist)
+            //Check each pizza's ingredient and scale price with ingredient amount
+
+            if (orderlist.Count != 0)
             {
-                price += (p.CalculatePizzaCost(p.ingredientCount));
+
+                foreach (var order in orderlist)
+                {
+                    this.price += (p.CalculatePizzaCost(p.ingredientCount));
+                }
+
             }
 
-            return (price > 500.00) ? false : true;
+            if (this.price > 500.00)
+            {
+                validOrder = false;
+            }
+
+            else price = this.price;
+
+            return validOrder;
+
         }
 
         //test
+        //If 'remove' = 1 then return is 'true' for topping removal
+        /*
         public Pizza ChangeTopping(Pizza p, StoreLocation s, string topping, int remove)
         {
             switch (topping)
@@ -71,7 +92,7 @@ namespace PizzaLibrary.Classes
                     p.hasSausage = (remove == 1) ? 0 : 1;
                     break;
                 case "ham":
-                    p.hasHam = (remove == 1) ? 0 : 1;
+                    p.hasHam = (remove == 1) ? 0: 1;
                     break;
                 case "hotsauce":
                     p.hasHotsauce = (remove == 1) ? 0 : 1;
@@ -80,10 +101,8 @@ namespace PizzaLibrary.Classes
                     break;
             }
 
-            //Simulate "using the inventory" from target store.
-            s.UseInventory(s, p);
             return p;
-        }
+        } */
 
         //test
         public bool CheckStoreInventory(StoreLocation s)
@@ -95,7 +114,7 @@ namespace PizzaLibrary.Classes
 
         public override string ToString()
         {
-            return $"{{{nameof(hasPepperoni)}={hasPepperoni}, {nameof(hasHam)}={hasHam}, {nameof(hasSausage)}={hasSausage}, {nameof(hasHotsauce)}={hasHotsauce}, {nameof(ingredientCount)}={ingredientCount}}}" + "\nPizza price: " + CalculatePizzaCost(ingredientCount);
+            return $"{{{nameof(hasPepperoni)}={hasPepperoni}, {nameof(hasHam)}={hasHam}, {nameof(hasSausage)}={hasSausage}, {nameof(hasHotsauce)}={hasHotsauce}, {nameof(ingredientCount)}={ingredientCount}}}" + "\nPizza price: $" + this.price;
         }
     }
 }

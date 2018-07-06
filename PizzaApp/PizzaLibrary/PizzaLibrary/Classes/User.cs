@@ -18,7 +18,7 @@ namespace PizzaLibrary.Classes
         //user's complete name
         public string UserName { get; set; } = "?";
         public string UserCity { get; set; } = "reston";
-        public DateTime OrderTime { get; set; } = DateTime.Now;
+        public DateTime OrderTime { get; set; }
 
         //test
         public DateTime GetOrderTime()
