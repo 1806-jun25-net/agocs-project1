@@ -77,7 +77,7 @@ namespace PizzaLibrary.Classes
 
         }
 
-        //test
+        //extraneous functionality may implement much later
         //If 'remove' = 1 then return is 'true' for topping removal
         /*
         public Pizza ChangeTopping(Pizza p, StoreLocation s, string topping, int remove)
@@ -104,7 +104,7 @@ namespace PizzaLibrary.Classes
             return p;
         } */
 
-        //test
+        //test done
         public bool CheckStoreInventory(StoreLocation s)
         {
 

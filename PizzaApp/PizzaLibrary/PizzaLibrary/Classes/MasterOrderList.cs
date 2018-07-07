@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PizzaLibrary.Classes
@@ -13,7 +14,8 @@ namespace PizzaLibrary.Classes
 
             if (masterlist.Count <= 0)
             {
-                Console.WriteLine("Error: empty masterlist.");
+                Console.WriteLine("\nError: empty masterlist.");
+                orderLocationFound = false;
             }
 
             foreach (var superList in masterlist)
@@ -48,13 +50,14 @@ namespace PizzaLibrary.Classes
 
 
         //test
-        public static void AllOrdersInUser(List<List<Order>> masterlist, string user)
+        public static void AllOrdersInUser(List<List<Order>> masterlist, string[] userInfo)
         {
             bool foundOrder = false;
 
             if (masterlist.Count <= 0)
             {
-                Console.WriteLine("Error: empty masterlist.");
+                Console.WriteLine("\nError: empty masterlist.");
+                foundOrder = false;
             }
 
             foreach (var listorder in masterlist)
@@ -63,7 +66,7 @@ namespace PizzaLibrary.Classes
                 foreach (var list in listorder)
                 {
 
-                    if (list.user.UserName == user)
+                    if (list.user.UserName == userInfo[0] && list.user.UserLastName == userInfo[1])
                     {
 
                         Order.OrderString(list.pizza, list.loc, list.user);
@@ -77,7 +80,7 @@ namespace PizzaLibrary.Classes
 
             if (!foundOrder)
             {
-                Console.WriteLine("Order was not found under that username.");
+                Console.WriteLine("\nOrder was not found under that username.");
             }
         }
 
@@ -88,7 +91,8 @@ namespace PizzaLibrary.Classes
 
             if (masterlist.Count <= 0)
             {
-                Console.WriteLine("Error: empty masterlist.");
+                Console.WriteLine("\nError: empty masterlist.");
+                foundlocation = false;
             }
 
             foreach (var sublist in masterlist)
@@ -101,6 +105,7 @@ namespace PizzaLibrary.Classes
                         if (location == suborder.user.UserCity)
                         {
                             foundlocation = true;
+                            Console.WriteLine("\nFound " + location);
                         }
                     }
                 }
@@ -117,25 +122,31 @@ namespace PizzaLibrary.Classes
         }
 
         //test
-        public static bool SearchUser(List<List<Order>> masterlist, string user)
+        public static bool SearchUser(List<List<Order>> masterlist, string[] userInfo)
         {
             bool founduser = false;
 
             if (masterlist.Count <= 0)
             {
                 Console.WriteLine("Error: empty masterlist.");
+                founduser = false;
             }
+
 
             foreach (var sublist in masterlist)
             {
 
-                for (int i = 0; i < sublist.Count; i++)
+                var DistinctFullUserName = sublist.GroupBy(x => x.user.UserLastName).Select(y => y.First());
+
+                for (int i = 0; i < DistinctFullUserName.Count(); i++)
                 {
-                    foreach (var suborder in sublist)
+                    foreach (var suborder in DistinctFullUserName)
                     {
-                        if (user == suborder.user.UserName)
+                        if (suborder.user.UserName == userInfo[0])
                         {
+                            Console.WriteLine("Found username " + suborder.user.UserName + " " + suborder.user.UserLastName);
                             founduser = true;
+
                         }
                     }
                 }

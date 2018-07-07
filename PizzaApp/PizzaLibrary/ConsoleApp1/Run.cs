@@ -98,7 +98,7 @@ namespace PizzaApp
                 string user = Console.ReadLine();
                 string[] userinfo = user.Split();
 
-                if (!MasterOrderList.SearchUser(masterList, userinfo[0]))
+                if (!MasterOrderList.SearchUser(masterList, userinfo))
                 {
                     Console.Write("Would you like to add it? y/n\n");
                     string userCreateAnswer = Console.ReadLine();
@@ -189,9 +189,10 @@ namespace PizzaApp
                         }
 
                         User u = new User(userinfo[0], userinfo[1], location, DateTime.Now);
+                        Order o = new Order(u, s, p, DateTime.Now);
                         p.ingredientCount = userChoices.Length;
 
-                        Console.WriteLine("\nChecking if {0} has ordered in the last two hours..", userinfo[0]);
+                        Console.WriteLine("\nChecking if {0} has ordered in the last two hours at provided location...", userinfo[0]);
 
                         foreach (var superlist in masterList)
                         {
@@ -200,11 +201,14 @@ namespace PizzaApp
                                 if (list.user.UserName == userinfo[0] && list.user.UserLastName == userinfo[1])
                                 {
 
-                                    if (!Order.OrderValid(list.user.OrderTime))
-                                    {
-                                        Console.WriteLine("\nSorry, you've ordered in the last two hours!");
+                                    if (!Order.OrderValid(o, location))
+                                    { 
                                         UIPrompt();
                                     }
+                                }
+                                else
+                                {
+                                    Console.Write("\nOrder validated.");
                                 }
                             }
                         }
@@ -221,9 +225,11 @@ namespace PizzaApp
 
                                 Console.WriteLine("\nWhat would you like to do?\n1. Check current orders.\n2. Order Again\n3. Stop ordering.");
                                 string choice = Console.ReadLine();
+
                                 switch (choice)
                                 {
                                     case "1":
+                                        currentlist.Add(o);
                                         foreach (var list in currentlist)
                                         {
                                             Order.UserOrderString(p, u);
@@ -231,12 +237,12 @@ namespace PizzaApp
                                         break;
                                     case "2":
                                         p.CalculatePizzaCost(p.ingredientCount);
-                                        currentlist.Add(new Order(u, s, p, DateTime.Now));
+                                        currentlist.Add(o);
                                         makingPizza = false;
                                         moreOrder = false;
                                         break;
                                     case "3":
-                                        currentlist.Add(new Order(u, s, p, DateTime.Now));
+                                        currentlist.Add(o);
                                         makingPizza = false;
                                         ordering = false;
                                         moreOrder = false;
@@ -270,7 +276,8 @@ namespace PizzaApp
         {
             Console.WriteLine("\nPlease enter a username to search.");
             string username = Console.ReadLine();
-            MasterOrderList.SearchUser(masterList, username);
+            string[] answer = username.Split();
+            MasterOrderList.SearchUser(masterList, answer);
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadLine();
             UIPrompt();
@@ -279,8 +286,9 @@ namespace PizzaApp
 
         private static void DisplayHistoryFromUser(List<List<Order>> masterList)
         {
-            Console.WriteLine("\nPlease enter a username to return all orders made.");
-            string username = Console.ReadLine();
+            Console.WriteLine("\nPlease enter a username and lastname to return all orders made.");
+            string response = Console.ReadLine();
+            string[] username = response.Split();
             MasterOrderList.AllOrdersInUser(masterList, username);
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadLine();
@@ -337,23 +345,26 @@ namespace PizzaApp
             User u2 = new User("jay", "day", "dullas", DateTime.Now.AddHours(2));
             User u3 = new User("eric", "io", "reston", DateTime.Now.AddMinutes(90));
             User u4 = new User("carl", "mads", "reston", DateTime.Now.AddMinutes(90));
+            User u5 = new User("eric", "ago", "reston", DateTime.Now.AddMinutes(90));
+
 
 
             StoreLocation s1 = new StoreLocation(10, 10, 10, 10);
             StoreLocation s2 = new StoreLocation(10, 20, 40, 3);
             StoreLocation s3 = new StoreLocation(10, 2, 30, 300);
 
-            Order o1 = new Order(u1, s1, p1, DateTime.Now.AddHours(-1));
-            Order o2 = new Order(u2, s2, p2, DateTime.Now.AddHours(-10));
             Order o3 = new Order(u3, s3, p3, DateTime.Now.AddHours(-10));
-
+            Order o4 = new Order(u5, s3, p3, DateTime.Now.AddHours(-10));
 
             List<Order> userOrders1 = new List<Order>();
             List<Order> userOrders2 = new List<Order>();
 
-            userOrders1.Add(o1);
-            userOrders2.Add(o2);
+            userOrders1.Add(o4);
             userOrders2.Add(o3);
+            userOrders1.Add(o4);
+            userOrders2.Add(o3);
+
+
 
             masterList.Add(userOrders1);
             masterList.Add(userOrders2);

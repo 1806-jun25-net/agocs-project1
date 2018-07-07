@@ -15,6 +15,13 @@ namespace PizzaLibrary.Classes
             OrderTime = orderTime;
         }
 
+        public User(string userName, string userLastName)
+        {
+            UserName = userName;
+            UserLastName = userLastName;
+
+        }
+
         //user's complete name
         public string UserName { get; set; } = "?";
         public string UserLastName { get; set; } = "?";
@@ -22,15 +29,16 @@ namespace PizzaLibrary.Classes
         public DateTime OrderTime { get; set; }
 
         //test
-        public DateTime GetOrderTime()
+        public int GetOrderHour()
         {
-            return DateTime.Now;
+            return OrderTime.Hour;
 
         }
 
         public override string ToString()
         {
-            return $"{{{nameof(UserName)}={UserName}, {nameof(UserCity)}={UserCity}, {nameof(OrderTime)}={OrderTime}}}";
+            return $"{{{nameof(UserName)}={UserName}, {nameof(UserLastName)}={UserLastName}, {nameof(UserCity)}={UserCity}, {nameof(OrderTime)}={OrderTime}}}";
         }
     }
+
    }
