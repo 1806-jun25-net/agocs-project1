@@ -35,5 +35,21 @@ namespace PizzaLibrary.Classes
                               "User info    : " + u.ToString() + "\n");
 
         }
+
+        //test
+        public static bool OrderValid(DateTime userOrdertime)
+        {
+            bool ValidOrder = true;
+
+            DateTime now = DateTime.Now;
+            DateTime twoHours = now.AddHours(-2);
+            if (userOrdertime > twoHours && userOrdertime <= now)
+            {
+                Console.Write("\nSorry. You've made a complete order in the last two hours.\n" +
+                    "Please wait and try again!");
+            }
+
+            return ValidOrder;
+        }
     }
 }

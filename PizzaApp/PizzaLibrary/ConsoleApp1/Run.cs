@@ -94,10 +94,11 @@ namespace PizzaApp
 
             while (ordering)
             {
-                Console.WriteLine("\nPlease enter a username for this pizza.");
-                string username = Console.ReadLine();
+                Console.WriteLine("\nPlease enter a username and user lastname for this pizza.");
+                string user = Console.ReadLine();
+                string[] userinfo = user.Split();
 
-                if (!MasterOrderList.SearchUser(masterList, username))
+                if (!MasterOrderList.SearchUser(masterList, userinfo[0]))
                 {
                     Console.Write("Would you like to add it? y/n\n");
                     string userCreateAnswer = Console.ReadLine();
@@ -105,7 +106,7 @@ namespace PizzaApp
                     switch (userCreateAnswer)
                     {
                         case "y":
-                            Console.WriteLine("\nLogged in as " + username + ".");
+                            Console.WriteLine("\nLogged in as " + userinfo[0] + ".");
                             break;
                         case "n":
                             Console.WriteLine("\nUsername required to complete order.");
@@ -115,28 +116,6 @@ namespace PizzaApp
                             Console.WriteLine("\nError: unknown input. Restarting order process.");
                             CreateOrders();
                             break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("\nUsername " + username + " confirmed! Welcome.");
-
-                    foreach (var superlist in masterList)
-                    {
-                        foreach (var list in superlist)
-                        {
-                            if (list.user.UserName == username)
-                            {
-                                DateTime now = DateTime.Now;
-                                DateTime twoHours = now.AddHours(-2);
-                                if (list.user.OrderTime > twoHours && list.user.OrderTime <= now)
-                                {
-                                    Console.Write("Sorry. You've made a complete order in the last two hours.\n" +
-                                        "Please wait and try again!");
-                                    UIPrompt();
-                                }
-                            }
-                        }
                     }
                 }
 
@@ -177,7 +156,7 @@ namespace PizzaApp
                     Console.WriteLine("\nWelcome '{0}'!\nPlease choose your toppings.\n1: Pepperoni\n" +
                                                 "2: Ham\n" +
                                                 "3: Sausage\n" +
-                                                "4: Hotsauce\n", username);
+                                                "4: Hotsauce\n", userinfo[0]);
 
                 string toppingChoices = Console.ReadLine();
                 string[] userChoices = toppingChoices.Split();
@@ -209,8 +188,26 @@ namespace PizzaApp
                             }
                         }
 
-                        User u = new User(username, location, DateTime.Now);
+                        User u = new User(userinfo[0], userinfo[1], location, DateTime.Now);
                         p.ingredientCount = userChoices.Length;
+
+                        Console.WriteLine("\nChecking if {0} has ordered in the last two hours..", userinfo[0]);
+
+                        foreach (var superlist in masterList)
+                        {
+                            foreach (var list in superlist)
+                            {
+                                if (list.user.UserName == userinfo[0] && list.user.UserLastName == userinfo[1])
+                                {
+
+                                    if (!Order.OrderValid(list.user.OrderTime))
+                                    {
+                                        Console.WriteLine("\nSorry, you've ordered in the last two hours!");
+                                        UIPrompt();
+                                    }
+                                }
+                            }
+                        }
 
                         if (p.ValidPizzaOrder(p, currentList))
                         {
@@ -336,22 +333,27 @@ namespace PizzaApp
             Pizza p1 = new Pizza(1, 0, 1, 1, 12.20, 3);
             Pizza p2 = new Pizza(1, 1, 1, 1, 50.00, 1);
             Pizza p3 = new Pizza(1, 0, 1, 0, 34.00, 2);
-            User u1 = new User("bob", "reston", DateTime.Now.AddDays(1));
-            User u2 = new User("jay", "dullas", DateTime.Now.AddHours(2));
-            User u3 = new User("eric", "dullas", DateTime.Now.AddMinutes(90));
-            User u4 = new User("carl", "jupiter", DateTime.Now.AddMinutes(90));
+            User u1 = new User("bob", "cray", "herndon", DateTime.Now.AddDays(1));
+            User u2 = new User("jay", "day", "dullas", DateTime.Now.AddHours(2));
+            User u3 = new User("eric", "io", "reston", DateTime.Now.AddMinutes(90));
+            User u4 = new User("carl", "mads", "reston", DateTime.Now.AddMinutes(90));
 
 
-            StoreLocation s = new StoreLocation();
+            StoreLocation s1 = new StoreLocation(10, 10, 10, 10);
+            StoreLocation s2 = new StoreLocation(10, 20, 40, 3);
+            StoreLocation s3 = new StoreLocation(10, 2, 30, 300);
 
-            Order o1 = new Order(u1, s, p3, DateTime.Now.AddHours(-1));
-            Order o2 = new Order(u3, s, p3, DateTime.Now.AddHours(-1));
+            Order o1 = new Order(u1, s1, p1, DateTime.Now.AddHours(-1));
+            Order o2 = new Order(u2, s2, p2, DateTime.Now.AddHours(-10));
+            Order o3 = new Order(u3, s3, p3, DateTime.Now.AddHours(-10));
+
 
             List<Order> userOrders1 = new List<Order>();
             List<Order> userOrders2 = new List<Order>();
 
             userOrders1.Add(o1);
             userOrders2.Add(o2);
+            userOrders2.Add(o3);
 
             masterList.Add(userOrders1);
             masterList.Add(userOrders2);

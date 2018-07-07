@@ -23,28 +23,32 @@ namespace PizzaLibrary.Classes
         }
 
 
-        //test
+        //test done
         public StoreLocation UseInventory(StoreLocation s, Pizza p)
         {
             //if a pizza has an ingredient, "use" that ingredient at target store
             //using discrete units of 'one'
-            if (p.hasHam == 1)
+            for (int i = 0; i < p.ingredientCount; i++)
             {
-                s.Ham--;
-            }
-            else if (p.hasPepperoni == 1)
-            {
-                s.Pepperoni--;
-            }
-            else if (p.hasSausage == 1)
-            {
-                s.Sausage--;
-            }
-            else if (p.hasHotsauce == 1)
-            {
-                s.Hotsauce--;
-            }
+                if (s.Pepperoni > 0 && p.hasPepperoni == 1)
+                {
+                    s.Pepperoni--;
+                }
+                if (s.Ham > 0 && p.hasHam == 1)
+                {
+                    s.Ham--;
+                }
+                if (s.Hotsauce > 0 && p.hasHotsauce == 1)
+                {
+                    s.Hotsauce--;
+                }
+                if (s.Sausage > 0 && p.hasSausage == 1)
+                {
+                    s.Sausage--;
+                }
 
+
+            }
             return s;
         }
 
@@ -57,46 +61,20 @@ namespace PizzaLibrary.Classes
         }
 
 
-        //test
+        //test done
         public bool CheckIfEmptyInventory(StoreLocation s)
-        { 
-
-            int[] ingredients = {   this.Pepperoni,
-                                    this.Ham,
-                                    this.Sausage,
-                                    this.Hotsauce };
-
-            for (int i = 0; i < ingredients.Length; i++)
+        {
+            bool hasEmptyIngredient = false;
+            
+            if (s.Ham <= 0 || s.Pepperoni  <= 0
+                || s.Sausage <= 0 || s.Hotsauce <= 0)
             {
-                if (ingredients[i].Equals(0))
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            Console.Write("Pepperoni");
-                            break;
-                        case 1:
-                            Console.Write("Ham");
-                            break;
-                        case 2:
-                            Console.Write("Sausage");
-                            break;
-                        case 3:
-                            Console.Write("Hot Sauce");
-                            break;
-                        default:
-                            Console.Write("Unknown '{0}' reference!", ingredients[i]);
-                            break;
-
-                    }
-
-                    Console.Write(" is gone at this location! Cannot make that pizza.");
-                    return true;
-                }
+                hasEmptyIngredient = true;
 
             }
 
-            return false;
+            return hasEmptyIngredient;
+            
         }
 
         public override string ToString()

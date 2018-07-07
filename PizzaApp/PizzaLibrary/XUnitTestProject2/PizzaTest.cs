@@ -2,25 +2,114 @@ using System;
 using Xunit;
 using PizzaLibrary.Classes;
 using PizzaLibrary;
+using System.Collections.Generic;
+using FluentAssertions;
 
 namespace PizzaUnitTester
 {
     public class PizzaTester
     {
-        private readonly MasterOrderList mol;
+        private readonly Pizza GoodPizza = new Pizza(1, 1, 1, 1, 50.00, 1);
+        private readonly Pizza BadPizza1 = new Pizza(1, 0, 1, 1, 512.20, 1);
+        private readonly Pizza BadPizza2 = new Pizza(1, 0, 1, 0, 34.00, 40);
+        private readonly User BadUser1 = new User("bob", "cray", "herndon", DateTime.Now.AddDays(1));
+        private readonly User BadUser2 = new User("jay", "day", "dullas", DateTime.Now.AddHours(-2));
+        private readonly User GoodUser1 = new User("eric", "io", "reston", DateTime.Now.AddMinutes(90));
+        private readonly User GoodUser2 = new User("carl", "mads", "reston", DateTime.Now);
+        private readonly StoreLocation GoodStore1 = new StoreLocation(10, 10, 10, 10);
+        private readonly StoreLocation BadStore1 = new StoreLocation(0, 20, 40, 3);
+        private readonly StoreLocation BadStore2 = new StoreLocation(10, 2, 30, 0);
+
+        //helper func
+        public List<List<Order>> CreateTestMasterList(List<Order> o)
+        {
+            List<List<Order>> ml = new List<List<Order>>();
+            ml.Add(o);
+
+            return ml;
+        }
+
+        //helper func
+        public List<Order> CreateTestListOrder(Order o)
+        {
+            List<Order> lo = new List<Order>();
+            lo.Add(o);
+            return lo;
+
+        }
+
+        //helper func
+        public Order CreateTestOrders (User u, StoreLocation s, Pizza p)
+        {
+
+            Order o = new Order(u, s, p, DateTime.Now);
+            return o;
+
+        }
 
         [Theory]
         [InlineData(10)]
         [InlineData(0)]
         [InlineData(12)]
         [InlineData(1)]
-        //MasterOrderList method
         public void NumberOfOrdersValidLessThan12(int orders)
         {
 
             var result = MasterOrderList.NumberOfOrdersValid(orders);
             Assert.True(result, $"{result} should be valid.");
 
+
+        }
+
+        [CustomAssertion]
+        [Fact]
+        public void StoreInventoryDecreaseInventoryOnPizzaCreation() {
+
+            StoreLocation s = new StoreLocation(1, 1, 1, 1);
+            StoreLocation s2 = new StoreLocation(0, 0, 0, 0);
+            Pizza p = new Pizza(1, 1, 1, 1, 25.00, 4);
+            s.UseInventory(s, p);
+            s.Should().BeEquivalentTo(s2);
+        }
+
+        [Fact]
+        public void StoreInventoryCheckIfAnyIngredientIsZero()
+        {
+            StoreLocation s = new StoreLocation(0, 1, 1, 1);
+            Assert.True(s.CheckIfEmptyInventory(s));
+
+
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(4)]
+        public void CalculatePizzaCostTest(int count)
+        {
+            Pizza p = new Pizza(1, 1, 1, 1, 25.00, count);
+
+            Assert.Equal((25.00) * p.ingredientCount, p.CalculatePizzaCost(p.ingredientCount));
+
+        }
+
+        [Fact]
+        public void CheckPizzaValidity()
+        { 
+
+            List<Order> lo = new List<Order>();
+            List<Order> lo2 = new List<Order>();
+            List<Order> lo3 = new List<Order>();
+            //this orderlist is invalid due to price
+            lo.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza1));
+            //this orderlist is invalid due to topping amount
+            lo2.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza2));
+            //this orderlist should be valid
+            lo3.Add(CreateTestOrders(GoodUser2, GoodStore1, GoodPizza));
+
+            Assert.False(BadPizza1.ValidPizzaOrder(BadPizza1, lo));
+            Assert.False(BadPizza2.ValidPizzaOrder(BadPizza2, lo2));
+            Assert.True(GoodPizza.ValidPizzaOrder(GoodPizza, lo3));
 
         }
     }

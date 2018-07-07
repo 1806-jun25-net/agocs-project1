@@ -28,18 +28,19 @@ namespace PizzaLibrary.Classes
         public int ingredientCount { get; set; } = 0;
         public const int INGREDIENTAMOUNTMAX = 4;
 
-        //test
+        //test done
         public double CalculatePizzaCost (int numIngredients)
         {
-            return numIngredients * this.price;
+            return numIngredients * price;
 
         }
 
-        //test
+        //test done
         public bool ValidPizzaOrder(Pizza p, List<Order> orderlist)
         {
 
-            bool validOrder = false;
+            bool validOrder = true;
+            double price = 0.00;
 
             if (p.ingredientCount > INGREDIENTAMOUNTMAX)
             {
@@ -50,9 +51,8 @@ namespace PizzaLibrary.Classes
             else if (orderlist.Count == 0)
             {
                 validOrder = true;
+                price = this.price;
             }
-
-            double price = 0.00;
 
             //Check each pizza's ingredient and scale price with ingredient amount
 
