@@ -15,9 +15,9 @@ namespace PizzaUnitTester
         private static readonly User BadUser2 = new User("jay", "day", "dullas", DateTime.Now.AddHours(-3));
         private static readonly User GoodUser1 = new User("eric", "io", "reston", DateTime.Now);
         private static readonly User GoodUser2 = new User("carl", "mads", "reston", DateTime.Now);
-        private static readonly StoreLocation GoodStore1 = new StoreLocation(10, 10, 10, 10);
-        private static readonly StoreLocation BadStore1 = new StoreLocation(0, 20, 40, 3);
-        private static readonly StoreLocation BadStore2 = new StoreLocation(10, 2, 30, 0);
+        private static readonly StoreLocation GoodStore1 = new StoreLocation(10, 10, 10, 10, "reston");
+        private static readonly StoreLocation BadStore1 = new StoreLocation(0, 20, 40, 3, "herndon");
+        private static readonly StoreLocation BadStore2 = new StoreLocation(10, 2, 30, 0, "dullas");
         private static readonly Order BadOrder1 = new Order(BadUser1, BadStore1, BadPizza1, DateTime.Now);
         private static readonly Order GoodOrder2 = new Order(GoodUser1, GoodStore1, GoodPizza1, DateTime.Now);
 
@@ -67,8 +67,8 @@ namespace PizzaUnitTester
         [Fact]
         public void StoreInventoryDecreaseInventoryOnPizzaCreation() {
 
-            StoreLocation s = new StoreLocation(1, 1, 1, 1);
-            StoreLocation s2 = new StoreLocation(0, 0, 0, 0);
+            StoreLocation s = new StoreLocation(1, 1, 1, 1, "dullas");
+            StoreLocation s2 = new StoreLocation(0, 0, 0, 0, "dullas");
             Pizza p = new Pizza(1, 1, 1, 1, 25.00, 4);
             s.UseInventory(s, p);
             s.Should().BeEquivalentTo(s2);
@@ -77,7 +77,7 @@ namespace PizzaUnitTester
         [Fact]
         public void StoreInventoryCheckIfAnyIngredientIsZero()
         {
-            StoreLocation s = new StoreLocation(0, 1, 1, 1);
+            StoreLocation s = new StoreLocation(0, 1, 1, 1, "reston");
             Assert.True(s.CheckIfEmptyInventory(s));
 
 

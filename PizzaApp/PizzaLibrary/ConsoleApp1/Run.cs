@@ -9,7 +9,7 @@ namespace PizzaApp
 
         //Test instantiations
         private static List<List<Order>> masterList = new List<List<Order>>();
-        private static List<Order> currentlist = new List<Order>();
+        private static List<Order> currentListOfUserOrders = new List<Order>();
 
         static void Main(string[] args)
         {
@@ -46,17 +46,17 @@ namespace PizzaApp
                     DisplayHistoryFromUser(masterList);
                     break;
                 case "4":
-                    SuggestedOrder(currentlist);
+                    //SuggestedOrder(currentlist);
                     break;
                 case "5":
-                    if (MasterOrderList.NumberOfOrdersValid(currentlist.Count))
+                    if (MasterOrderList.NumberOfOrdersValid(currentListOfUserOrders.Count))
                     {
 
-                        masterList.Add(CreateOrders());
+                        masterList.Add(UsersListOfOrders());
 
-                        foreach (var order in currentlist)
+                        foreach (var order in currentListOfUserOrders)
                         {
-                            if (!order.pizza.ValidPizzaOrder(order.pizza, currentlist))
+                            if (!order.pizza.ValidPizzaOrder(order.pizza, currentListOfUserOrders))
                             {
                                 Console.WriteLine("\nError, a pizza order for " + order.user.UserName +
                                                    " is too expensive!\n" +
@@ -72,7 +72,7 @@ namespace PizzaApp
                     UIPrompt();
                     break;
                 case "6":
-                    DisplayCurrentOrder(currentlist);
+                    DisplayCurrentOrder(currentListOfUserOrders);
                     break;
                 default:
                     Console.WriteLine("\nUnknown choice. Please try again.");
@@ -82,19 +82,13 @@ namespace PizzaApp
 
         }
 
-        private static void SuggestedOrder(List<Order> masterList)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static List<Order> CreateOrders()
+        private static List<Order> UsersListOfOrders()
         {
             bool ordering = true;
-            List<Order> currentList = new List<Order>();
 
             while (ordering)
             {
-                Console.WriteLine("\nPlease enter a username and user lastname for this pizza.");
+                Console.WriteLine("\nPlease enter a username and user lastname for this new pizza.");
                 string user = Console.ReadLine();
                 string[] userinfo = user.Split();
 
@@ -110,20 +104,27 @@ namespace PizzaApp
                             break;
                         case "n":
                             Console.WriteLine("\nUsername required to complete order.");
-                            CreateOrders();
+                            UsersListOfOrders();
                             break;
                         default:
                             Console.WriteLine("\nError: unknown input. Restarting order process.");
-                            CreateOrders();
+                            UsersListOfOrders();
                             break;
                     }
+                }
+
+                else if (userinfo.Length < 2)
+                {
+                    Console.WriteLine("\nInvalid format.");
+                    UsersListOfOrders();
                 }
 
                 bool chooseLocation = true;
                 string location = "";
                 StoreLocation s = new StoreLocation();
 
-                while (chooseLocation) {
+                while (chooseLocation)
+                {
 
                     Console.WriteLine("\nPlease enter a location for which this pizza may be ordered.");
                     location = Console.ReadLine();
@@ -145,132 +146,106 @@ namespace PizzaApp
                         chooseLocation = false;
                     }
 
+
                 }
 
-                bool makingPizza = true;
+                return MakePizzas(currentListOfUserOrders, s, new User(userinfo[0], userinfo[1], location, DateTime.Now));
 
-                while (makingPizza)
+            }
 
-                {
+            return currentListOfUserOrders;
+        }
 
-                    Console.WriteLine("\nWelcome '{0}'!\nPlease choose your toppings.\n1: Pepperoni\n" +
-                                                "2: Ham\n" +
-                                                "3: Sausage\n" +
-                                                "4: Hotsauce\n", userinfo[0]);
+        private static List<Order> MakePizzas(List<Order> currentList, StoreLocation s, User u)
+        {
+            bool makingPizza = true;
+
+            while (makingPizza)
+
+            {
+                Console.WriteLine("\nWelcome '{0}'!\nPlease choose your toppings.\n1: Pepperoni\n" +
+                                            "2: Ham\n" +
+                                            "3: Sausage\n" +
+                                            "4: Hotsauce\n", u.UserName);
 
                 string toppingChoices = Console.ReadLine();
                 string[] userChoices = toppingChoices.Split();
                 Pizza p = new Pizza();
 
-                    if (userChoices.Length <= 4)
-                    {
+                if (userChoices.Length <= 4)
+                {
 
-                        for (int i = 0; i < userChoices.Length; i++)
+                    for (int i = 0; i < userChoices.Length; i++)
+                    {
+                        switch (userChoices[i])
                         {
-                            switch (userChoices[i])
+                            case "1":
+                                p.hasPepperoni = 1;
+                                break;
+                            case "2":
+                                p.hasHam = 1;
+                                break;
+                            case "3":
+                                p.hasSausage = 1;
+                                break;
+                            case "4":
+                                p.hasHotsauce = 1;
+                                break;
+                            default:
+                                Console.WriteLine("\nError. Invalid topping choices");
+                                break;
+
+                        }
+                    }
+
+                    Order o = new Order(u, s, p, DateTime.Now);
+
+                    if (p.ValidPizzaOrder(p, currentList))
+                    {
+                        s.UseInventory(s, p);
+                        Console.WriteLine("\nPizza is now baking. Order appended to current list.");
+
+                            Console.WriteLine("\nWhat would you like to do?\n1. Check current orders.\n2. Order another pizza.\n3. Stop ordering.");
+                            string choice = Console.ReadLine();
+
+                            switch (choice)
                             {
                                 case "1":
-                                    p.hasPepperoni = 1;
+                                    currentListOfUserOrders.Add(o);
+                                    foreach (var list in currentListOfUserOrders)
+                                    {
+                                        Order.UserOrderString(p, u);
+                                    }
                                     break;
                                 case "2":
-                                    p.hasHam = 1;
+                                    p.CalculatePizzaCost(p.ingredientCount);
+                                    currentListOfUserOrders.Add(o);
                                     break;
                                 case "3":
-                                    p.hasSausage = 1;
-                                    break;
-                                case "4":
-                                    p.hasHotsauce = 1;
+                                    currentListOfUserOrders.Add(o);
+                                    makingPizza = false;
+                                    Console.WriteLine("\nSaving information to database..." +
+                                        "\nThank you for using Pizza app.");
+                                    Console.ReadLine();
+                                    Environment.Exit(0);
                                     break;
                                 default:
-                                    Console.WriteLine("\nError. Invalid topping choices");
+                                    Console.WriteLine("\nUnknown choice.");
                                     break;
 
                             }
+                            makingPizza = false;
+
                         }
-
-                        User u = new User(userinfo[0], userinfo[1], location, DateTime.Now);
-                        Order o = new Order(u, s, p, DateTime.Now);
-                        p.ingredientCount = userChoices.Length;
-
-                        Console.WriteLine("\nChecking if {0} has ordered in the last two hours at provided location...", userinfo[0]);
-
-                        foreach (var superlist in masterList)
-                        {
-                            foreach (var list in superlist)
-                            {
-                                if (list.user.UserName == userinfo[0] && list.user.UserLastName == userinfo[1])
-                                {
-
-                                    if (!Order.OrderValid(o, location))
-                                    { 
-                                        UIPrompt();
-                                    }
-                                }
-                                else
-                                {
-                                    Console.Write("\nOrder validated.");
-                                }
-                            }
-                        }
-
-                        if (p.ValidPizzaOrder(p, currentList))
-                        {
-                            s.UseInventory(s, p);
-                            Console.WriteLine("\nPizza is now baking. Order appended to current list.");
-
-                            bool moreOrder = true;
-
-                            while (moreOrder)
-                            {
-
-                                Console.WriteLine("\nWhat would you like to do?\n1. Check current orders.\n2. Order Again\n3. Stop ordering.");
-                                string choice = Console.ReadLine();
-
-                                switch (choice)
-                                {
-                                    case "1":
-                                        currentlist.Add(o);
-                                        foreach (var list in currentlist)
-                                        {
-                                            Order.UserOrderString(p, u);
-                                        }
-                                        break;
-                                    case "2":
-                                        p.CalculatePizzaCost(p.ingredientCount);
-                                        currentlist.Add(o);
-                                        makingPizza = false;
-                                        moreOrder = false;
-                                        break;
-                                    case "3":
-                                        currentlist.Add(o);
-                                        makingPizza = false;
-                                        ordering = false;
-                                        moreOrder = false;
-                                        Console.WriteLine("\nSaving information to database..." +
-                                            "\nThank you for using Pizza app.");
-                                        Console.ReadLine();
-                                        Environment.Exit(0);
-                                        break;
-                                    default:
-                                        Console.WriteLine("\nUnknown choice.");
-                                        break;
-
-                                }
-                                makingPizza = false;
-
-                            }
-                        }
-
                     }
-                    else { Console.WriteLine("Error. Too many topping choices.\n"); }
 
-
-                }
+                else { Console.WriteLine("Error. Too many topping choices.\n"); }
 
             }
 
-            return currentlist;
+            return currentList;
         }
+
 
         private static void SearchUser(List<List<Order>> masterList)
         {
@@ -349,9 +324,9 @@ namespace PizzaApp
 
 
 
-            StoreLocation s1 = new StoreLocation(10, 10, 10, 10);
-            StoreLocation s2 = new StoreLocation(10, 20, 40, 3);
-            StoreLocation s3 = new StoreLocation(10, 2, 30, 300);
+            StoreLocation s1 = new StoreLocation(10, 10, 10, 10, "reston");
+            StoreLocation s2 = new StoreLocation(10, 20, 40, 3, "dullas");
+            StoreLocation s3 = new StoreLocation(10, 2, 30, 300, "herndon");
 
             Order o3 = new Order(u3, s3, p3, DateTime.Now.AddHours(-10));
             Order o4 = new Order(u5, s3, p3, DateTime.Now.AddHours(-10));
@@ -363,8 +338,6 @@ namespace PizzaApp
             userOrders2.Add(o3);
             userOrders1.Add(o4);
             userOrders2.Add(o3);
-
-
 
             masterList.Add(userOrders1);
             masterList.Add(userOrders2);

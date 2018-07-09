@@ -7,20 +7,21 @@ namespace PizzaLibrary.Classes
 
         public StoreLocation() { }
 
+        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce, string location)
+        {
+            Pepperoni = pepperoni;
+            Ham = ham;
+            Sausage = sausage;
+            Hotsauce = hotsauce;
+            Location = location;
+        }
+
         //At least 32 pizzas per store location can be made
         public int Pepperoni { get; set; } = 32;
         public int Ham { get; set; } = 32;
         public int Sausage { get; set; } = 32;
         public int Hotsauce { get; set; } = 32;
         public string Location { get; set; } = "reston";
-
-        public StoreLocation(int pepperoni, int ham, int sausage, int hotsauce)
-        {
-            this.Pepperoni = pepperoni;
-            this.Ham = ham;
-            this.Sausage = sausage;
-            this.Hotsauce = hotsauce;
-        }
 
 
         //test done

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaLibrary.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace PizzaLibrary.Classes
             foreach (var superList in masterlist)
             {
 
-                foreach(var subList in superList)
+                foreach (var subList in superList)
                 {
 
                     if (subList.user.UserCity == location)
@@ -32,7 +33,7 @@ namespace PizzaLibrary.Classes
                     }
                 }
 
-               
+
             }
 
             if (!orderLocationFound)
@@ -91,21 +92,25 @@ namespace PizzaLibrary.Classes
 
             if (masterlist.Count <= 0)
             {
-                Console.WriteLine("\nError: empty masterlist.");
+                Console.WriteLine("Error: empty masterlist.");
                 foundlocation = false;
             }
+
 
             foreach (var sublist in masterlist)
             {
 
-                for (int i = 0; i < sublist.Count; i++)
+                var DistinctLocation = sublist.GroupBy(x => x.user.UserCity).Select(y => y.First());
+
+                for (int i = 0; i < DistinctLocation.Count(); i++)
                 {
-                    foreach (var suborder in sublist)
+                    foreach (var suborder in DistinctLocation)
                     {
-                        if (location == suborder.user.UserCity)
+                        if (suborder.user.UserCity == location)
                         {
+                            Console.WriteLine("Found location " + suborder.user.UserCity);
                             foundlocation = true;
-                            Console.WriteLine("\nFound " + location);
+
                         }
                     }
                 }
@@ -113,13 +118,14 @@ namespace PizzaLibrary.Classes
 
             if (!foundlocation)
             {
-                Console.WriteLine("Sorry, location was not found.\n");
+                Console.WriteLine("Sorry, user was not found.\n");
                 return foundlocation;
             }
 
-            return foundlocation;
+            else return foundlocation;
 
         }
+
 
         //test
         public static bool SearchUser(List<List<Order>> masterlist, string[] userInfo)
@@ -163,3 +169,4 @@ namespace PizzaLibrary.Classes
         }
     }
 }
+

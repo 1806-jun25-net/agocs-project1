@@ -36,14 +36,14 @@ namespace PizzaLibrary.Classes
 
         }
 
-        //test
-        public static bool OrderValid(Order o, string currentLocation)
+        //test done
+        public static bool OrderValid(Order o, string orderLocationToBeMade)
         {
             bool ValidOrder = true;
 
             TimeSpan span = DateTime.Now.Subtract(o.user.OrderTime);
 
-            if ((span.Hours) < 2 && o.user.UserCity == currentLocation)
+            if ((span.Hours) < 2 && o.user.UserCity == orderLocationToBeMade)
             {
                 Console.Write("\nSorry. You've made a complete order in the last two hours. At this location.\n" +
                     "Please wait and try again!");

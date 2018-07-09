@@ -56,7 +56,7 @@ namespace PizzaLibrary.Classes
 
             //Check each pizza's ingredient and scale price with ingredient amount
 
-            if (orderlist.Count != 0)
+            else if (orderlist.Count != 0)
             {
 
                 foreach (var order in orderlist)
@@ -66,7 +66,7 @@ namespace PizzaLibrary.Classes
 
             }
 
-            if (this.price > 500.00)
+            else if (this.price > 500.00)
             {
                 validOrder = false;
             }
