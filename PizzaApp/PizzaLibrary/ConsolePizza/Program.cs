@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using Context = ContextPizza;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PizzaLibrary.Classes;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace PizzaApp
 {
-    class App
+    class ConsolePizza
     {
 
         //Test instantiations
@@ -22,12 +23,12 @@ namespace PizzaApp
 
             IConfigurationRoot configuration = configBuilder.Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<pizzadatabaseContext>(); //DbContext?
+            var optionsBuilder = new DbContextOptionsBuilder<Context.pizzadatabaseContext>(); //DbContext?
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("appsettings.json"));
             var options = optionsBuilder.Options;
 
 
-            //Test
+            //get data
             LoadTestData(masterList);
             UIPrompt();
         }
@@ -219,39 +220,39 @@ namespace PizzaApp
                         s.UseInventory(s, p);
                         Console.WriteLine("\nPizza is now baking. Order appended to current list.");
 
-                            Console.WriteLine("\nWhat would you like to do?\n1. Check current orders.\n2. Order another pizza.\n3. Stop ordering.");
-                            string choice = Console.ReadLine();
+                        Console.WriteLine("\nWhat would you like to do?\n1. Check current orders.\n2. Order another pizza.\n3. Stop ordering.");
+                        string choice = Console.ReadLine();
 
-                            switch (choice)
-                            {
-                                case "1":
-                                    currentListOfUserOrders.Add(o);
-                                    foreach (var list in currentListOfUserOrders)
-                                    {
-                                        Order.UserOrderString(p, u);
-                                    }
-                                    break;
-                                case "2":
-                                    p.CalculatePizzaCost(p.ingredientCount);
-                                    currentListOfUserOrders.Add(o);
-                                    break;
-                                case "3":
-                                    currentListOfUserOrders.Add(o);
-                                    makingPizza = false;
-                                    Console.WriteLine("\nSaving information to database..." +
-                                        "\nThank you for using Pizza app.");
-                                    Console.ReadLine();
-                                    Environment.Exit(0);
-                                    break;
-                                default:
-                                    Console.WriteLine("\nUnknown choice.");
-                                    break;
-
-                            }
-                            makingPizza = false;
+                        switch (choice)
+                        {
+                            case "1":
+                                currentListOfUserOrders.Add(o);
+                                foreach (var list in currentListOfUserOrders)
+                                {
+                                    Order.UserOrderString(p, u);
+                                }
+                                break;
+                            case "2":
+                                p.CalculatePizzaCost(p.ingredientCount);
+                                currentListOfUserOrders.Add(o);
+                                break;
+                            case "3":
+                                currentListOfUserOrders.Add(o);
+                                makingPizza = false;
+                                Console.WriteLine("\nSaving information to database..." +
+                                    "\nThank you for using Pizza app.");
+                                Console.ReadLine();
+                                Environment.Exit(0);
+                                break;
+                            default:
+                                Console.WriteLine("\nUnknown choice.");
+                                break;
 
                         }
+                        makingPizza = false;
+
                     }
+                }
 
                 else { Console.WriteLine("Error. Too many topping choices.\n"); }
 
@@ -305,11 +306,12 @@ namespace PizzaApp
                     Order.UserOrderString(orders.pizza, orders.user);
                 }
 
-            } else { Console.WriteLine("\nYou have no current order.");  }
+            }
+            else { Console.WriteLine("\nYou have no current order."); }
 
             UIPrompt();
             Console.WriteLine("\nPress any key to continue..");
-        
+
         }
 
         private void Serialize(List<Order> order)

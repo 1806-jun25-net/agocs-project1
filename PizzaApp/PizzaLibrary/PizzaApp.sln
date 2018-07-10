@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLibrary", "PizzaLibrary\PizzaLibrary.csproj", "{7461AC19-F316-4C31-BD55-EE459EEF748F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaConsole", "ConsoleApp1\PizzaConsole.csproj", "{1A896A03-CAFA-480F-9563-6E69AE412C54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject2", "XUnitTestProject2\XUnitTestProject2.csproj", "{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject2", "XUnitTestProject2\XUnitTestProject2.csproj", "{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContextPizza", "ContextPizza\ContextPizza.csproj", "{F7F17721-3828-4487-89F6-5257210649A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePizza", "ConsolePizza\ConsolePizza.csproj", "{0AE8EC75-59FE-4F4C-A32D-8BA0313D9A82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{7461AC19-F316-4C31-BD55-EE459EEF748F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7461AC19-F316-4C31-BD55-EE459EEF748F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7461AC19-F316-4C31-BD55-EE459EEF748F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A896A03-CAFA-480F-9563-6E69AE412C54}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3196DD1A-DAF7-497A-97C8-0F7B32881AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7F17721-3828-4487-89F6-5257210649A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F17721-3828-4487-89F6-5257210649A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F17721-3828-4487-89F6-5257210649A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F17721-3828-4487-89F6-5257210649A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE8EC75-59FE-4F4C-A32D-8BA0313D9A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE8EC75-59FE-4F4C-A32D-8BA0313D9A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE8EC75-59FE-4F4C-A32D-8BA0313D9A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE8EC75-59FE-4F4C-A32D-8BA0313D9A82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
