@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsolePizza\ConsolePizza.csproj" />
     <ProjectReference Include="..\PizzasLibrary\PizzasLibrary.csproj" />
   </ItemGroup>
 

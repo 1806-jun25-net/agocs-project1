@@ -76,28 +76,23 @@ namespace PizzaLibrary.Classes
 
         public static Order Map(Order order) => new Order
         {
-
+            UserId = order.UserId,
             loc = order.loc,
             pizza = order.pizza,
             user = order.user
 
         };
 
-        internal static object Map(IQueryable<ContextPizza.Order> queryable)
-        {
-            throw new NotImplementedException();
-        }
 
         public static ContextPizza.Order Map(ContextPizza.Order order) => new ContextPizza.Order
         {
 
+            UserId = order.UserId,
             Store = order.Store,
             User = order.User,
             PizzaOrder = order.PizzaOrder
 
         };
-
-
 
 
         public static List<Pizza> Map(IEnumerable<ContextPizza.Pizza> pizzas) => pizzas.Select(Map).ToList();
@@ -106,6 +101,8 @@ namespace PizzaLibrary.Classes
         public static List<ContextPizza.User> Map(IEnumerable<User> users) => users.Select(Map).ToList();
         public static List<StoreLocation> Map(IEnumerable<ContextPizza.StoreLocation> locations) => locations.Select(Map).ToList();
         public static List<ContextPizza.StoreLocation> Map(IEnumerable<StoreLocation> locations) => locations.Select(Map).ToList();
+        public static IEnumerable<ContextPizza.Order> Map(IEnumerable<ContextPizza.Order> orders) => orders.Select(Map).ToList();
+        public static IEnumerable<Order> Map(IEnumerable<Order> orders) => orders.Select(Map).ToList();
 
 
     }

@@ -3,11 +3,16 @@ using Xunit;
 using System.Collections.Generic;
 using FluentAssertions;
 using PizzaLibrary.Classes;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using System.Linq;
 
 namespace PizzaUnitTester
 {
     public class PizzaTester
     {
+
         private static readonly Pizza GoodPizza1 = new Pizza(1, 1, 1, 1, 50.00, 1);
         private static readonly Pizza BadPizza1 = new Pizza(1, 0, 1, 1, 512.20, 1);
         private static readonly Pizza BadPizza2 = new Pizza(1, 0, 1, 0, 34.00, 40);
@@ -20,6 +25,14 @@ namespace PizzaUnitTester
         private static readonly StoreLocation BadStore2 = new StoreLocation(10, 2, 30, 0, "dullas");
         private static readonly Order BadOrder1 = new Order(BadUser1, BadStore1, BadPizza1, DateTime.Now);
         private static readonly Order GoodOrder2 = new Order(GoodUser1, GoodStore1, GoodPizza1, DateTime.Now);
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
 
 
         //helper func
@@ -49,11 +62,87 @@ namespace PizzaUnitTester
 
         }
 
+
         [Fact]
-        public void AddUserToDbAndReadBack()
+        public void AddOrderToDb()
         {
-            PizzaLibrary.PizzaRepository pr = new PizzaLibrary.PizzaRepository();
-            pr.UserAdd(new User("taste", "taset", "reston", DateTime.Now));
+            var configBuilder = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configBuilder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new PizzaLibrary.PizzaRepository(dbContext);
+
+            string rs1 = RandomString(3);
+            string rs2 = RandomString(3);
+
+            User u = new User(rs1, rs2, "reston", DateTime.Now);
+
+            repository.UserAdd(u);
+            repository.Save();
+
+            int userID = repository.IDUserMatch(rs1, rs2);
+
+            Order o = new Order(u, GoodStore1, GoodPizza1, DateTime.Now);
+            o.UpdateUserId(userID);
+
+            repository.AddOrder(o);
+            repository.Save();
+
+        }
+
+        [Fact]
+        public void AddUserToDb()
+        {
+             var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configBuilder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new PizzaLibrary.PizzaRepository(dbContext);
+
+            string rs1 = RandomString(3);
+            string rs2 = RandomString(3);
+
+            User u = new User(rs1, rs2, "reston", DateTime.Now);
+
+            repository.UserAdd(u);
+            repository.Save();
+            Assert.Equal(repository.userIDMatch(rs1, rs2), repository.IDUserMatch(rs1, rs2));
+            
+            
+        }
+
+        [Fact]
+        public void DBSearchUserByNameAndLastName()
+        {
+            var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configBuilder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new PizzaLibrary.PizzaRepository(dbContext);
+
+
+            Assert.Equal(1, repository.userIDMatch("taste", "taset"));
+            Assert.Equal(-1, repository.userIDMatch("taste", "tast"));
+
+
         }
 
         [Theory]

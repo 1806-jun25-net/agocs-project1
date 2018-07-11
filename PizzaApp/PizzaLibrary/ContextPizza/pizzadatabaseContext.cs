@@ -15,6 +15,7 @@ namespace ContextPizza
         {
         }
 
+
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Pizza> Pizza { get; set; }
         public virtual DbSet<PizzaOrder> PizzaOrder { get; set; }

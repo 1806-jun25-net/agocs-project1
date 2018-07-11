@@ -28,6 +28,8 @@ namespace PizzaApp
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
             var options = optionsBuilder.Options;
 
+            var dbContext = new Context.pizzadatabaseContext(options);
+            var repository = new PizzaLibrary.PizzaRepository(dbContext);
 
             //get data
             LoadTestData(masterList);
@@ -348,6 +350,9 @@ namespace PizzaApp
             StoreLocation s2 = new StoreLocation(10, 20, 40, 3, "dullas");
             StoreLocation s3 = new StoreLocation(10, 2, 30, 300, "herndon");
 
+            PizzaLibrary.PizzaRepository pizzaRepo = new PizzaLibrary.PizzaRepository();
+            pizzaRepo.UserAdd(u1);
+            pizzaRepo.Save();
             Order o3 = new Order(u3, s3, p3, DateTime.Now.AddHours(-10));
             Order o4 = new Order(u5, s3, p3, DateTime.Now.AddHours(-10));
 

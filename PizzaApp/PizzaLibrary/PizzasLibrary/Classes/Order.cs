@@ -9,6 +9,7 @@ namespace PizzaLibrary.Classes
     {
         public Order() { }
 
+        public int UserId { get; set; }
         public User user;
         public StoreLocation loc;
         public Pizza pizza;
@@ -19,6 +20,11 @@ namespace PizzaLibrary.Classes
             this.loc = loc;
             this.pizza = pizza;
 
+        }
+
+        public void UpdateUserId(int id)
+        {
+          UserId = id;
         }
 
         public static void OrderString(Pizza p, StoreLocation l, User u)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ContextPizza;
-using Microsoft.EntityFrameworkCore;
 using PizzaLibrary.Classes;
 
 
@@ -19,6 +18,20 @@ namespace PizzaLibrary
 
         public PizzaRepository()
         {
+        }
+
+        public int IDUserMatch(string username, string lastname)
+        {
+            var users = _db.User;
+            foreach (var user in users)
+            {
+                if (user.Firstname == username && user.Lastname == lastname)
+                {
+                    return user.UserId;
+                }
+            }
+            return -1;
+
         }
 
         public int userIDMatch(string fn, string ln)
@@ -48,9 +61,11 @@ namespace PizzaLibrary
                       public int OrderId { get; set; }
                       public int PizzaOrderId { get; set; } */
 
-            ContextPizza.PizzaOrder pizzaorderjunction = new ContextPizza.PizzaOrder { OrderId = orderID, PizzaId = pizzaId };
+            PizzaOrder pizzaorderjunction = new PizzaOrder { OrderId = orderID, PizzaId = pizzaId };
             _db.Add(pizzaorderjunction);
         }
+
+
 
         public void AddOrder(Classes.Order order)
         {
