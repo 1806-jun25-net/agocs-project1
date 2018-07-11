@@ -6,17 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+
 namespace PizzaApp
 {
     class ConsolePizza
     {
 
-        //Test instantiations
         private static List<List<Order>> masterList = new List<List<Order>>();
         private static List<Order> currentListOfUserOrders = new List<Order>();
 
         static void Main(string[] args)
         {
+
             var configBuilder = new ConfigurationBuilder()
            .SetBasePath(Directory.GetCurrentDirectory())
            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -100,6 +101,8 @@ namespace PizzaApp
         private static List<Order> UsersListOfOrders()
         {
             bool ordering = true;
+            PizzaLibrary.PizzaRepository db = new PizzaLibrary.PizzaRepository();
+
 
             while (ordering)
             {
@@ -111,6 +114,7 @@ namespace PizzaApp
                 {
                     Console.Write("Would you like to add it? y/n\n");
                     string userCreateAnswer = Console.ReadLine();
+
 
                     switch (userCreateAnswer)
                     {
@@ -158,6 +162,9 @@ namespace PizzaApp
                     {
                         Console.WriteLine("\n" + location + " has been confirmed.");
                         s.Location = location;
+                        User u = new User(userinfo[0], userinfo[1], location, DateTime.Today);
+                        db.UserAdd(u);
+                        db.Save();
                         chooseLocation = false;
                     }
 
@@ -328,7 +335,6 @@ namespace PizzaApp
 
         private static List<List<Order>> LoadTestData(List<List<Order>> masterList)
         {
-
             Pizza p1 = new Pizza(1, 0, 1, 1, 12.20, 3);
             Pizza p2 = new Pizza(1, 1, 1, 1, 50.00, 1);
             Pizza p3 = new Pizza(1, 0, 1, 0, 34.00, 2);

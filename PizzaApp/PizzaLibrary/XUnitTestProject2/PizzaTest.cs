@@ -49,6 +49,13 @@ namespace PizzaUnitTester
 
         }
 
+        [Fact]
+        public void AddUserToDbAndReadBack()
+        {
+            PizzaLibrary.PizzaRepository pr = new PizzaLibrary.PizzaRepository();
+            pr.UserAdd(new User("taste", "taset", "reston", DateTime.Now));
+        }
+
         [Theory]
         [InlineData(10)]
         [InlineData(0)]

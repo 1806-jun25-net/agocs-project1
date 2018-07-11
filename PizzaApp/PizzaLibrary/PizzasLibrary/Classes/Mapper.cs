@@ -1,6 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContextPizza;
 
 namespace PizzaLibrary.Classes
 {
@@ -81,6 +83,11 @@ namespace PizzaLibrary.Classes
 
         };
 
+        internal static object Map(IQueryable<ContextPizza.Order> queryable)
+        {
+            throw new NotImplementedException();
+        }
+
         public static ContextPizza.Order Map(ContextPizza.Order order) => new ContextPizza.Order
         {
 
@@ -92,9 +99,13 @@ namespace PizzaLibrary.Classes
 
 
 
-        public static IEnumerable<Pizza> Map(IEnumerable<ContextPizza.Pizza> pizza) => pizza.Select(Map).ToList();
-        public static IEnumerable<User> Map(IEnumerable<ContextPizza.User> user) => user.Select(Map).ToList();
-        public static IEnumerable<StoreLocation> Map(IEnumerable<ContextPizza.StoreLocation> store) => store.Select(Map).ToList();
+
+        public static List<Pizza> Map(IEnumerable<ContextPizza.Pizza> pizzas) => pizzas.Select(Map).ToList();
+        public static List<ContextPizza.Pizza> Map(IEnumerable<Pizza> pizzas) => pizzas.Select(Map).ToList();
+        public static List<User> Map(IEnumerable<ContextPizza.User> users) => users.Select(Map).ToList();
+        public static List<ContextPizza.User> Map(IEnumerable<User> users) => users.Select(Map).ToList();
+        public static List<StoreLocation> Map(IEnumerable<ContextPizza.StoreLocation> locations) => locations.Select(Map).ToList();
+        public static List<ContextPizza.StoreLocation> Map(IEnumerable<StoreLocation> locations) => locations.Select(Map).ToList();
 
 
     }
