@@ -24,7 +24,7 @@ namespace PizzaApp
             IConfigurationRoot configuration = configBuilder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<Context.pizzadatabaseContext>(); //DbContext?
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("appsettings.json"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
             var options = optionsBuilder.Options;
 
 
@@ -337,8 +337,6 @@ namespace PizzaApp
             User u3 = new User("eric", "io", "reston", DateTime.Now.AddMinutes(90));
             User u4 = new User("carl", "mads", "reston", DateTime.Now.AddMinutes(90));
             User u5 = new User("eric", "ago", "reston", DateTime.Now.AddMinutes(90));
-
-
 
             StoreLocation s1 = new StoreLocation(10, 10, 10, 10, "reston");
             StoreLocation s2 = new StoreLocation(10, 20, 40, 3, "dullas");

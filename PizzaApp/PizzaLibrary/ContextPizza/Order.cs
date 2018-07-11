@@ -11,7 +11,6 @@ namespace ContextPizza
         }
 
         public int OrderId { get; set; }
-        public DateTime Ordertime { get; set; }
         public int StoreId { get; set; }
         public int UserId { get; set; }
 

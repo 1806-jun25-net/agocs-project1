@@ -34,10 +34,6 @@ namespace ContextPizza
             {
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
-                entity.Property(e => e.Ordertime)
-                    .HasColumnName("ordertime")
-                    .HasColumnType("datetime");
-
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");

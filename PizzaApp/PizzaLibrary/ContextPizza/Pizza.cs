@@ -11,10 +11,10 @@ namespace ContextPizza
         }
 
         public int PizzaId { get; set; }
-        public bool HasHotsauce { get; set; }
-        public bool HasHam { get; set; }
-        public bool HasSausage { get; set; }
-        public bool HasPepperoni { get; set; }
+        public int HasHotsauce { get; set; }
+        public int HasHam { get; set; }
+        public int HasSausage { get; set; }
+        public int HasPepperoni { get; set; }
         public int IngredientCount { get; set; }
 
         public ICollection<PizzaOrder> PizzaOrder { get; set; }

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PizzaLibrary\PizzaLibrary.csproj" />
+    <ProjectReference Include="..\PizzasLibrary\PizzasLibrary.csproj" />
   </ItemGroup>
 
 </Project>

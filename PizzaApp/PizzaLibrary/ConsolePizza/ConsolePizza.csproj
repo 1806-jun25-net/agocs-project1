@@ -12,11 +12,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContextPizza\ContextPizza.csproj" />
-    <ProjectReference Include="..\PizzaLibrary\PizzaLibrary.csproj" />
+    <ProjectReference Include="..\PizzasLibrary\PizzasLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,5 +26,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/ansible-stable-2.5" /></VisualStudio></ProjectExtensions>
 
 </Project>

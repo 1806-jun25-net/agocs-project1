@@ -1,8 +1,8 @@
 using System;
 using Xunit;
-using PizzaLibrary.Classes;
 using System.Collections.Generic;
 using FluentAssertions;
+using PizzaLibrary.Classes;
 
 namespace PizzaUnitTester
 {
