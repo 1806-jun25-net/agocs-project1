@@ -7,7 +7,7 @@ namespace ContextPizza
     {
         public Pizza()
         {
-            PizzaOrder = new HashSet<PizzaOrder>();
+            Order = new HashSet<Order>();
         }
 
         public int PizzaId { get; set; }
@@ -17,6 +17,6 @@ namespace ContextPizza
         public int HasPepperoni { get; set; }
         public int IngredientCount { get; set; }
 
-        public ICollection<PizzaOrder> PizzaOrder { get; set; }
+        public ICollection<Order> Order { get; set; }
     }
 }

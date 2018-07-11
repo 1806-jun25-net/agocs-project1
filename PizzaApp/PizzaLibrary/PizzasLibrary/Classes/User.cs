@@ -28,13 +28,6 @@ namespace PizzaLibrary.Classes
         public string UserCity { get; set; } = "reston";
         public DateTime OrderTime { get; set; }
 
-        //test
-        public int GetOrderHour()
-        {
-            return OrderTime.Hour;
-
-        }
-
         public override string ToString()
         {
             return $"{{{nameof(UserName)}={UserName}, {nameof(UserLastName)}={UserLastName}, {nameof(UserCity)}={UserCity}, {nameof(OrderTime)}={OrderTime}}}";

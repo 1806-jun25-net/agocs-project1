@@ -1,92 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using ContextPizza;
+﻿using ContextPizza;
 using PizzaLibrary.Classes;
+using System;
+using System.Collections.Generic;
+using PizzaLibrary;
 
-
-namespace PizzaLibrary
+namespace pizzalibrary
 {
-    public class PizzaRepository
+    public class pizzarepository
     {
         private readonly pizzadatabaseContext _db;
 
 
-        public PizzaRepository(pizzadatabaseContext db)
+        public pizzarepository(pizzadatabaseContext db)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public PizzaRepository()
+        public pizzarepository()
         {
         }
 
-        public int IDUserMatch(string username, string lastname)
+        public string findnamewithid(int userid)
         {
             var users = _db.User;
             foreach (var user in users)
             {
-                if (user.Firstname == username && user.Lastname == lastname)
+                if (user.UserId == userid)
+                {
+                    return user.Firstname + user.Lastname;
+                }
+            }
+            return "user not found";
+
+        }
+
+        public int findidwithname(string fn, string ln)
+        {
+            var users = _db.User;
+            foreach (var user in users)
+            {
+                if ((user.Firstname == fn && user.Lastname == ln))
                 {
                     return user.UserId;
                 }
             }
             return -1;
-
         }
 
-        public int userIDMatch(string fn, string ln)
-        {
-            var users = _db.User;
-            foreach (var user in users)
-            {
-                if ((user.Firstname.Equals(fn)) && (user.Lastname.Equals(ln)))
-                {
-                    return user.UserId;
-                }
-            }
-            return -1;
-        }
-
-        public void UserAdd(Classes.User u)
+        public void useradd(PizzaLibrary.Classes.User user)
         {
 
-            _db.Add(Mapper.Map(u));
+            _db.Add(Mapper.Map(user));
 
         }
 
-
-        public void AddPizzaOrders(int orderID, int pizzaId)
-        {
-            /*        public int PizzaId { get; set; }
-                      public int OrderId { get; set; }
-                      public int PizzaOrderId { get; set; } */
-
-            PizzaOrder pizzaorderjunction = new PizzaOrder { OrderId = orderID, PizzaId = pizzaId };
-            _db.Add(pizzaorderjunction);
-        }
-
-
-
-        public void AddOrder(Classes.Order order)
+        public void addorder(PizzaLibrary.Classes.Order order)
         {
             _db.Add(Mapper.Map(order));
         }
 
 
-        public List<Classes.Pizza> FindOrderPizzaID(int id)
-        {
-            List<Classes.Pizza> pl = new List<Classes.Pizza>();
-            foreach (var pizzaorder in _db.PizzaOrder)
-            {
-                if (pizzaorder.OrderId == id)
-                {
-                    pl.Add(Mapper.Map(_db.Pizza.Find(pizzaorder.PizzaId)));
-                }
-            }
-            return pl;
-        }
-
-        public void Save()
+        public void save()
         {
             _db.SaveChanges();
         }

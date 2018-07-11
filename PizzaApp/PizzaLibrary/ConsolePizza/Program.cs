@@ -1,10 +1,10 @@
-﻿using Context = ContextPizza;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PizzaLibrary.Classes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using PizzaContext = ContextPizza;
 
 
 namespace PizzaApp
@@ -14,6 +14,7 @@ namespace PizzaApp
 
         private static List<List<Order>> masterList = new List<List<Order>>();
         private static List<Order> currentListOfUserOrders = new List<Order>();
+        private static readonly object repository;
 
         static void Main(string[] args)
         {
@@ -24,12 +25,12 @@ namespace PizzaApp
 
             IConfigurationRoot configuration = configBuilder.Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<Context.pizzadatabaseContext>(); //DbContext?
+            var optionsBuilder = new DbContextOptionsBuilder<PizzaContext.pizzadatabaseContext>(); //DbContext?
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
             var options = optionsBuilder.Options;
 
-            var dbContext = new Context.pizzadatabaseContext(options);
-            var repository = new PizzaLibrary.PizzaRepository(dbContext);
+            var dbContext = new PizzaContext.pizzadatabaseContext(options);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
 
             //get data
             LoadTestData(masterList);
@@ -74,12 +75,12 @@ namespace PizzaApp
 
                         foreach (var order in currentListOfUserOrders)
                         {
-                            if (!order.pizza.ValidPizzaOrder(order.pizza, currentListOfUserOrders))
+                            if (!order.Pizza.ValidPizzaOrder(order.Pizza, currentListOfUserOrders))
                             {
-                                Console.WriteLine("\nError, a pizza order for " + order.user.UserName +
+                                Console.WriteLine("\nError, a pizza order for " + order.User.UserName +
                                                    " is too expensive!\n" +
                                                    "Current price: $" +
-                                                   order.pizza.CalculatePizzaCost(order.pizza.ingredientCount));
+                                                   order.Pizza.CalculatePizzaCost(order.Pizza.ingredientCount));
                             }
                         }
                     }
@@ -103,25 +104,36 @@ namespace PizzaApp
         private static List<Order> UsersListOfOrders()
         {
             bool ordering = true;
-            PizzaLibrary.PizzaRepository db = new PizzaLibrary.PizzaRepository();
 
+            var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configBuilder.Build();
+
+           var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+           optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+           var options = optionsBuilder.Options;
+           var dbContext = new ContextPizza.pizzadatabaseContext(options);
+           var repository = new pizzalibrary.pizzarepository(dbContext);
 
             while (ordering)
             {
                 Console.WriteLine("\nPlease enter a username and user lastname for this new pizza.");
                 string user = Console.ReadLine();
                 string[] userinfo = user.Split();
+                bool createUser = false;
 
                 if (!MasterOrderList.SearchUser(masterList, userinfo))
                 {
                     Console.Write("Would you like to add it? y/n\n");
                     string userCreateAnswer = Console.ReadLine();
 
-
                     switch (userCreateAnswer)
                     {
                         case "y":
                             Console.WriteLine("\nLogged in as " + userinfo[0] + ".");
+                            createUser = true;
                             break;
                         case "n":
                             Console.WriteLine("\nUsername required to complete order.");
@@ -139,6 +151,7 @@ namespace PizzaApp
                     Console.WriteLine("\nInvalid format.");
                     UsersListOfOrders();
                 }
+
 
                 bool chooseLocation = true;
                 string location = "";
@@ -165,11 +178,15 @@ namespace PizzaApp
                         Console.WriteLine("\n" + location + " has been confirmed.");
                         s.Location = location;
                         User u = new User(userinfo[0], userinfo[1], location, DateTime.Today);
-                        db.UserAdd(u);
-                        db.Save();
-                        chooseLocation = false;
-                    }
+                        if (!createUser)
+                        {
+                            repository.useradd(u);
+                            repository.save();
+                        }
 
+                        chooseLocation = false;
+
+                    }
 
                 }
 
@@ -222,6 +239,8 @@ namespace PizzaApp
                         }
                     }
 
+                    p.price = p.CalculatePizzaCost(userChoices.Length);
+                    p.ingredientCount = userChoices.Length;
                     Order o = new Order(u, s, p, DateTime.Now);
 
                     if (p.ValidPizzaOrder(p, currentList))
@@ -242,7 +261,7 @@ namespace PizzaApp
                                 }
                                 break;
                             case "2":
-                                p.CalculatePizzaCost(p.ingredientCount);
+                                UIPrompt();
                                 currentListOfUserOrders.Add(o);
                                 break;
                             case "3":
@@ -273,10 +292,33 @@ namespace PizzaApp
 
         private static void SearchUser(List<List<Order>> masterList)
         {
+
+            var configBuilder = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configBuilder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
+
+
             Console.WriteLine("\nPlease enter a username to search.");
             string username = Console.ReadLine();
             string[] answer = username.Split();
-            MasterOrderList.SearchUser(masterList, answer);
+
+            if (repository.findidwithname(answer[0], answer[1]) == 1)
+            {
+                Console.WriteLine(answer[0] + " " + answer[1] + " was found.");
+            }
+
+            else Console.WriteLine("User was not found.");
+
+
+            //MasterOrderList.SearchUser(masterList, answer);
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadLine();
             UIPrompt();
@@ -312,7 +354,7 @@ namespace PizzaApp
             {
                 foreach (var orders in currentUserOrderList)
                 {
-                    Order.UserOrderString(orders.pizza, orders.user);
+                    Order.UserOrderString(orders.Pizza, orders.User);
                 }
 
             }
@@ -321,18 +363,6 @@ namespace PizzaApp
             UIPrompt();
             Console.WriteLine("\nPress any key to continue..");
 
-        }
-
-        private void Serialize(List<Order> order)
-        {
-            //Temporary objects
-
-
-        }
-
-        private List<Order> Deserialize()
-        {
-            return null;
         }
 
         private static List<List<Order>> LoadTestData(List<List<Order>> masterList)
@@ -350,17 +380,24 @@ namespace PizzaApp
             StoreLocation s2 = new StoreLocation(10, 20, 40, 3, "dullas");
             StoreLocation s3 = new StoreLocation(10, 2, 30, 300, "herndon");
 
-            PizzaLibrary.PizzaRepository pizzaRepo = new PizzaLibrary.PizzaRepository();
-            pizzaRepo.UserAdd(u1);
-            pizzaRepo.Save();
+            var configBuilder = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configBuilder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
+
             Order o3 = new Order(u3, s3, p3, DateTime.Now.AddHours(-10));
             Order o4 = new Order(u5, s3, p3, DateTime.Now.AddHours(-10));
 
             List<Order> userOrders1 = new List<Order>();
             List<Order> userOrders2 = new List<Order>();
 
-            userOrders1.Add(o4);
-            userOrders2.Add(o3);
             userOrders1.Add(o4);
             userOrders2.Add(o3);
 

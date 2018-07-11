@@ -11,7 +11,7 @@ namespace PizzaLibrary.Classes
 
         public static Pizza Map(ContextPizza.Pizza pizza) => new Pizza
         {
-            
+
             hasPepperoni = pizza.HasPepperoni,
             hasHam = pizza.HasHam,
             hasHotsauce = pizza.HasHotsauce,
@@ -55,11 +55,11 @@ namespace PizzaLibrary.Classes
 
         public static StoreLocation Map(ContextPizza.StoreLocation store) => new StoreLocation
         {
-           Pepperoni = store.Pepperoni,
-           Sausage = store.Sausage,
-           Ham = store.Ham,
-           Hotsauce = store.Hotsauce,
-           Location = store.City
+            Pepperoni = store.Pepperoni,
+            Sausage = store.Sausage,
+            Ham = store.Ham,
+            Hotsauce = store.Hotsauce,
+            Location = store.City
 
         };
 
@@ -76,10 +76,9 @@ namespace PizzaLibrary.Classes
 
         public static Order Map(Order order) => new Order
         {
-            UserId = order.UserId,
-            loc = order.loc,
-            pizza = order.pizza,
-            user = order.user
+            Store = order.Store,
+            Pizza = order.Pizza,
+            User = order.User
 
         };
 
@@ -87,10 +86,9 @@ namespace PizzaLibrary.Classes
         public static ContextPizza.Order Map(ContextPizza.Order order) => new ContextPizza.Order
         {
 
-            UserId = order.UserId,
             Store = order.Store,
             User = order.User,
-            PizzaOrder = order.PizzaOrder
+            Pizza = order.Pizza
 
         };
 

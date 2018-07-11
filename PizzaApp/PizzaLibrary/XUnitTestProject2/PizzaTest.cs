@@ -34,37 +34,41 @@ namespace PizzaUnitTester
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        //[Fact]
+        //public void AddOrderToDb()
+        //{
+        //    var configBuilder = new ConfigurationBuilder()
+        //   .SetBasePath(Directory.GetCurrentDirectory())
+        //   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-        //helper func
-        public List<List<Order>> CreateTestMasterList(List<Order> o)
-        {
-            List<List<Order>> ml = new List<List<Order>>();
-            ml.Add(o);
+        //    IConfigurationRoot configuration = configBuilder.Build();
 
-            return ml;
-        }
+        //    var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+        //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+        //    var options = optionsBuilder.Options;
+        //    var dbContext = new ContextPizza.pizzadatabaseContext(options);
+        //    var repository = new PizzaLibrary.PizzaRepository(dbContext);
 
-        //helper func
-        public List<Order> CreateTestListOrder(Order o)
-        {
-            List<Order> lo = new List<Order>();
-            lo.Add(o);
-            return lo;
+        //    string rs1 = RandomString(3);
+        //    string rs2 = RandomString(3);
 
-        }
+        //    User u = new User(rs1, rs2, "reston", DateTime.Now);
 
-        //helper func
-        public Order CreateTestOrders (User u, StoreLocation s, Pizza p)
-        {
+        //    repository.UserAdd(u);
+        //    repository.Save();
 
-            Order o = new Order(u, s, p, DateTime.Now);
-            return o;
+        //    int newUsrID = repository.FindIDWithName(rs1, rs2);
 
-        }
+        //    Order o = new Order(u, GoodStore1, GoodPizza1, DateTime.Now);
 
+        //    repository.AddOrder(o);
+        //    repository.Save();
+
+
+        //}
 
         [Fact]
-        public void AddOrderToDb()
+        public void AddUserToDb()
         {
             var configBuilder = new ConfigurationBuilder()
            .SetBasePath(Directory.GetCurrentDirectory())
@@ -76,51 +80,22 @@ namespace PizzaUnitTester
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
             var options = optionsBuilder.Options;
             var dbContext = new ContextPizza.pizzadatabaseContext(options);
-            var repository = new PizzaLibrary.PizzaRepository(dbContext);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
 
             string rs1 = RandomString(3);
             string rs2 = RandomString(3);
+            string rs3 = rs1 + rs2;
 
             User u = new User(rs1, rs2, "reston", DateTime.Now);
 
-            repository.UserAdd(u);
-            repository.Save();
+            repository.useradd(u);
+            repository.save();
 
-            int userID = repository.IDUserMatch(rs1, rs2);
+            int newUsrID = repository.findidwithname(rs1, rs2);
 
-            Order o = new Order(u, GoodStore1, GoodPizza1, DateTime.Now);
-            o.UpdateUserId(userID);
+             Assert.Equal(rs3, repository.findnamewithid(newUsrID));
 
-            repository.AddOrder(o);
-            repository.Save();
 
-        }
-
-        [Fact]
-        public void AddUserToDb()
-        {
-             var configBuilder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            IConfigurationRoot configuration = configBuilder.Build();
-
-            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
-            var options = optionsBuilder.Options;
-            var dbContext = new ContextPizza.pizzadatabaseContext(options);
-            var repository = new PizzaLibrary.PizzaRepository(dbContext);
-
-            string rs1 = RandomString(3);
-            string rs2 = RandomString(3);
-
-            User u = new User(rs1, rs2, "reston", DateTime.Now);
-
-            repository.UserAdd(u);
-            repository.Save();
-            Assert.Equal(repository.userIDMatch(rs1, rs2), repository.IDUserMatch(rs1, rs2));
-            
-            
         }
 
         [Fact]
@@ -136,11 +111,11 @@ namespace PizzaUnitTester
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
             var options = optionsBuilder.Options;
             var dbContext = new ContextPizza.pizzadatabaseContext(options);
-            var repository = new PizzaLibrary.PizzaRepository(dbContext);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
 
 
-            Assert.Equal(1, repository.userIDMatch("taste", "taset"));
-            Assert.Equal(-1, repository.userIDMatch("taste", "tast"));
+           Assert.Equal(1, repository.findidwithname("taste", "taset"));
+           Assert.Equal(-1, repository.findidwithname("taste", "tast"));
 
 
         }
@@ -161,7 +136,8 @@ namespace PizzaUnitTester
 
         [CustomAssertion]
         [Fact]
-        public void StoreInventoryDecreaseInventoryOnPizzaCreation() {
+        public void StoreInventoryDecreaseInventoryOnPizzaCreation()
+        {
 
             StoreLocation s = new StoreLocation(1, 1, 1, 1, "dullas");
             StoreLocation s2 = new StoreLocation(0, 0, 0, 0, "dullas");
@@ -191,25 +167,23 @@ namespace PizzaUnitTester
 
         }
 
-        [Fact]
-        public void CheckPizzaValidityShouldReturnTrueIfPizzaValid()
-        { 
+        //[Fact]
+        //public void CheckPizzaValidityShouldReturnTrueIfPizzaValid()
+        //{
 
-            List<Order> lo = new List<Order>();
-            List<Order> lo2 = new List<Order>();
-            List<Order> lo3 = new List<Order>();
-            //this orderlist is invalid due to price
-            lo.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza1));
-            //this orderlist is invalid due to topping amount
-            lo2.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza2));
-            //this orderlist should be valid
-            lo3.Add(CreateTestOrders(GoodUser2, GoodStore1, GoodPizza1));
+        //    List<Order> lo = new List<Order>();
+        //    List<Order> lo2 = new List<Order>();
+        //    List<Order> lo3 = new List<Order>();
+        //    //this orderlist is invalid due to price
+        //    lo.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza1));
+        //    //this orderlist is invalid due to topping amount
+        //    lo2.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza2));
+        //    //this orderlist should be valid
+        //    lo3.Add(CreateTestOrders(GoodUser2, GoodStore1, GoodPizza1));
 
-            Assert.False(BadPizza1.ValidPizzaOrder(BadPizza1, lo));
-            Assert.False(BadPizza2.ValidPizzaOrder(BadPizza2, lo2));
-            Assert.True(GoodPizza1.ValidPizzaOrder(GoodPizza1, lo3));
+        //    Assert.False(BadPizza1.ValidPizzaOrder(BadPizza1, lo));
 
-        }
+        //}
 
         [Fact]
         public void CheckStoryInventoryShouldReturnTrueIfEmpty()
@@ -218,14 +192,14 @@ namespace PizzaUnitTester
             Assert.False(GoodPizza1.CheckStoreInventory(GoodStore1));
         }
 
-        [Fact]
-        public void CheckIfOrderValidOnlyIfMadeWithin2Hours()
-        {
+        //[Fact]
+        //public void CheckIfOrderValidOnlyIfMadeWithin2Hours()
+        //{
 
-           Assert.True(Order.OrderValid(GoodOrder2, "reston"));
-           Assert.False(Order.OrderValid(BadOrder1, "herndon"));
+        //   Assert.True(Order.OrderValid(GoodOrder2, "reston"));
+        //   Assert.False(Order.OrderValid(BadOrder1, "herndon"));
 
 
-        }
+        //}
     }
 }

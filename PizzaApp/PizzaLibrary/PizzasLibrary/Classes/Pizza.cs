@@ -7,6 +7,8 @@ namespace PizzaLibrary.Classes
     public class Pizza
     {
 
+        
+
         public Pizza() { }
 
         public Pizza(int hasPepperoni, int hasHam, int hasSausage, int hasHotsauce, double price, int ingredientCount)
@@ -28,6 +30,8 @@ namespace PizzaLibrary.Classes
         public double price { get; set; } = 12.50;
         public int ingredientCount { get; set; } = 0;
         public const int INGREDIENTAMOUNTMAX = 4;
+        public int PizzaID { get; set; }
+
 
         //test done
         public double CalculatePizzaCost (int numIngredients)
