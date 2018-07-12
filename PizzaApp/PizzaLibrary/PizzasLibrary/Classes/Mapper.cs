@@ -74,21 +74,21 @@ namespace PizzaLibrary.Classes
         };
 
 
-        public static Order Map(Order order) => new Order
+        public static ContextPizza.Order Map(Order order) => new ContextPizza.Order
         {
-            Store = order.Store,
-            Pizza = order.Pizza,
-            User = order.User
+            Store = Map(order.Store),
+            Pizza = Map(order.Pizza),
+            User = Map(order.User)
 
         };
 
 
-        public static ContextPizza.Order Map(ContextPizza.Order order) => new ContextPizza.Order
+        public static Order Map(ContextPizza.Order order) => new Order
         {
 
-            Store = order.Store,
-            User = order.User,
-            Pizza = order.Pizza
+            Store = Map(order.Store),
+            Pizza = Map(order.Pizza),
+            User = Map(order.User)
 
         };
 
@@ -99,8 +99,8 @@ namespace PizzaLibrary.Classes
         public static List<ContextPizza.User> Map(IEnumerable<User> users) => users.Select(Map).ToList();
         public static List<StoreLocation> Map(IEnumerable<ContextPizza.StoreLocation> locations) => locations.Select(Map).ToList();
         public static List<ContextPizza.StoreLocation> Map(IEnumerable<StoreLocation> locations) => locations.Select(Map).ToList();
-        public static IEnumerable<ContextPizza.Order> Map(IEnumerable<ContextPizza.Order> orders) => orders.Select(Map).ToList();
-        public static IEnumerable<Order> Map(IEnumerable<Order> orders) => orders.Select(Map).ToList();
+        public static List<Order> Map(IEnumerable<ContextPizza.Order> orders) => orders.Select(Map).ToList();
+        public static List<ContextPizza.Order> Map(IEnumerable<Order> orders) => orders.Select(Map).ToList();
 
 
     }

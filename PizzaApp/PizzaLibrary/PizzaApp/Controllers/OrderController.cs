@@ -2,45 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Library = PizzaLibrary.Classes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Context = ContextPizza;
 
 namespace PizzaApp.Controllers
 {
-    public class UserController : Controller
+    public class OrderController : Controller
     {
-        private readonly Context.pizzadatabaseContext _context;
-
-
-        public UserController(Context.pizzadatabaseContext context)
-        {
-            _context = context;
-        }
-
-        // GET: User
+        // GET: Order
         public ActionResult Index()
         {
-            return View(_context.User.ToList());
-
+            return View();
         }
 
-        // GET: User/Details/5
+        // GET: Order/Details/5
         public ActionResult Details(int id)
         {
-            ContextPizza.User user = new ContextPizza.User();
-
-            return View(user);
+            return View();
         }
 
-        // GET: User/Create
+        // GET: Order/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Order/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -57,13 +44,13 @@ namespace PizzaApp.Controllers
             }
         }
 
-        // GET: User/Edit/5
+        // GET: Order/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: User/Edit/5
+        // POST: Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -80,13 +67,13 @@ namespace PizzaApp.Controllers
             }
         }
 
-        // GET: User/Delete/5
+        // GET: Order/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Order/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

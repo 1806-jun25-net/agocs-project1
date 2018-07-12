@@ -1,8 +1,7 @@
 ﻿using ContextPizza;
-using PizzaLibrary.Classes;
 using System;
 using System.Collections.Generic;
-using PizzaLibrary;
+using P = PizzaLibrary.Classes;
 
 namespace pizzalibrary
 {
@@ -20,7 +19,7 @@ namespace pizzalibrary
         {
         }
 
-        public string findnamewithid(int userid)
+        public string Findnamewithid(int userid)
         {
             var users = _db.User;
             foreach (var user in users)
@@ -34,33 +33,53 @@ namespace pizzalibrary
 
         }
 
-        public int findidwithname(string fn, string ln)
+        public int Findidwithname(string firstname, string lastname)
         {
             var users = _db.User;
-            foreach (var user in users)
+            foreach (var user2 in users)
             {
-                if ((user.Firstname == fn && user.Lastname == ln))
+                if (firstname == user2.Firstname &&
+                     lastname == user2.Lastname)
                 {
-                    return user.UserId;
+                    return user2.UserId;
                 }
             }
             return -1;
         }
 
-        public void useradd(PizzaLibrary.Classes.User user)
+        public int Findidwithstore(P.StoreLocation store1)
+        {
+            var stores = _db.StoreLocation;
+            foreach (var store2 in stores)
+            {
+                if (store1.Ham == store2.Ham &&
+                    store1.Hotsauce == store2.Hotsauce &&
+                    store1.Pepperoni == store2.Pepperoni &&
+                    store1.Sausage == store2.Sausage)
+                {
+                    return store2.StoreId;
+                }
+            }
+            return -1;
+        }
+
+
+
+
+        public void Useradd(P.User user)
         {
 
-            _db.Add(Mapper.Map(user));
+            _db.Add(P.Mapper.Map(user));
 
         }
 
-        public void addorder(PizzaLibrary.Classes.Order order)
+
+        public void Addorder(P.Order order)
         {
-            _db.Add(Mapper.Map(order));
+            _db.Add(P.Mapper.Map(order));
         }
 
-
-        public void save()
+        public void Save()
         {
             _db.SaveChanges();
         }

@@ -180,8 +180,8 @@ namespace PizzaApp
                         User u = new User(userinfo[0], userinfo[1], location, DateTime.Today);
                         if (!createUser)
                         {
-                            repository.useradd(u);
-                            repository.save();
+                            repository.Useradd(u);
+                            repository.Save();
                         }
 
                         chooseLocation = false;
@@ -310,7 +310,7 @@ namespace PizzaApp
             string username = Console.ReadLine();
             string[] answer = username.Split();
 
-            if (repository.findidwithname(answer[0], answer[1]) == 1)
+            if (repository.Findidwithname(answer[0], answer[1]) == 1)
             {
                 Console.WriteLine(answer[0] + " " + answer[1] + " was found.");
             }

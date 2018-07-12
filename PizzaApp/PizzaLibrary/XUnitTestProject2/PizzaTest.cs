@@ -16,8 +16,8 @@ namespace PizzaUnitTester
         private static readonly Pizza GoodPizza1 = new Pizza(1, 1, 1, 1, 50.00, 1);
         private static readonly Pizza BadPizza1 = new Pizza(1, 0, 1, 1, 512.20, 1);
         private static readonly Pizza BadPizza2 = new Pizza(1, 0, 1, 0, 34.00, 40);
-        private static readonly User BadUser1 = new User("bob", "cray", "herndon", DateTime.Now.AddHours(2));
-        private static readonly User BadUser2 = new User("jay", "day", "dullas", DateTime.Now.AddHours(-3));
+        private static readonly User BadUser1 = new User("bob", "cray", "herndon", DateTime.Now);
+        private static readonly User BadUser2 = new User("jay", "day", "dullas", DateTime.Now);
         private static readonly User GoodUser1 = new User("eric", "io", "reston", DateTime.Now);
         private static readonly User GoodUser2 = new User("carl", "mads", "reston", DateTime.Now);
         private static readonly StoreLocation GoodStore1 = new StoreLocation(10, 10, 10, 10, "reston");
@@ -34,38 +34,32 @@ namespace PizzaUnitTester
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        //[Fact]
-        //public void AddOrderToDb()
-        //{
-        //    var configBuilder = new ConfigurationBuilder()
-        //   .SetBasePath(Directory.GetCurrentDirectory())
-        //   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        [Fact]
+        public void AddOrderToDb()
+        {
+            var configBuilder = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-        //    IConfigurationRoot configuration = configBuilder.Build();
+            IConfigurationRoot configuration = configBuilder.Build();
 
-        //    var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
-        //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
-        //    var options = optionsBuilder.Options;
-        //    var dbContext = new ContextPizza.pizzadatabaseContext(options);
-        //    var repository = new PizzaLibrary.PizzaRepository(dbContext);
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
 
-        //    string rs1 = RandomString(3);
-        //    string rs2 = RandomString(3);
+            //int newusrid = repository.findidwithname(rs1, rs2);
+            //int pizzaid = repository.findidwithpizza(goodpizza1);
+            //int storeid = repository.findidwithstore(goodstore1);
 
-        //    User u = new User(rs1, rs2, "reston", DateTime.Now);
+            Order o = new Order(GoodUser1, GoodStore1, GoodPizza1, DateTime.Now);
 
-        //    repository.UserAdd(u);
-        //    repository.Save();
-
-        //    int newUsrID = repository.FindIDWithName(rs1, rs2);
-
-        //    Order o = new Order(u, GoodStore1, GoodPizza1, DateTime.Now);
-
-        //    repository.AddOrder(o);
-        //    repository.Save();
+            repository.Addorder(o);
+            repository.Save();
 
 
-        //}
+        }
 
         [Fact]
         public void AddUserToDb()
@@ -88,12 +82,19 @@ namespace PizzaUnitTester
 
             User u = new User(rs1, rs2, "reston", DateTime.Now);
 
-            repository.useradd(u);
-            repository.save();
+            repository.Useradd(u);
+            repository.Save();
 
-            int newUsrID = repository.findidwithname(rs1, rs2);
+            int newUsrID = repository.Findidwithname(rs1, rs2);
 
-             Assert.Equal(rs3, repository.findnamewithid(newUsrID));
+             Assert.Equal(rs3, repository.Findnamewithid(newUsrID));
+
+
+        }
+
+        [Fact]
+        public void DeleteUserFromDB()
+        {
 
 
         }
@@ -114,8 +115,8 @@ namespace PizzaUnitTester
             var repository = new pizzalibrary.pizzarepository(dbContext);
 
 
-           Assert.Equal(1, repository.findidwithname("taste", "taset"));
-           Assert.Equal(-1, repository.findidwithname("taste", "tast"));
+           Assert.Equal(1, repository.Findidwithname("taste", "taset"));
+           Assert.Equal(-1, repository.Findidwithname("taste", "tast"));
 
 
         }

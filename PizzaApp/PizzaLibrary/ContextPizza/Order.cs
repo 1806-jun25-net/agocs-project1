@@ -9,8 +9,6 @@ namespace ContextPizza
         public int StoreId { get; set; }
         public int PizzaId { get; set; }
         public int UserId { get; set; }
-        public DateTime Ordertime { get; set; }
-        public int Numberofpizzas { get; set; }
 
         public Pizza Pizza { get; set; }
         public StoreLocation Store { get; set; }
