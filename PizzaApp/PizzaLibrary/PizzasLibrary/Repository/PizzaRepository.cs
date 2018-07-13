@@ -1,4 +1,5 @@
 ﻿using ContextPizza;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using P = PizzaLibrary.Classes;
@@ -17,6 +18,7 @@ namespace pizzalibrary
 
         public pizzarepository()
         {
+
         }
 
         public string Findnamewithid(int userid)
@@ -64,7 +66,14 @@ namespace pizzalibrary
         }
 
 
+        public List<P.Order> GetAllOrders()
+        {
+            var orders = P.Mapper.Map(_db.Order.Include(a => a.Pizza).Include
+                                                       (b => b.Store).Include
+                                                       (c => c.User));
+            return orders;
 
+        }
 
         public void Useradd(P.User user)
         {
@@ -73,6 +82,52 @@ namespace pizzalibrary
 
         }
 
+        public void Userremove(string fn, string ln)
+        {
+
+            var users = _db.User;
+
+            foreach (var user in users)
+            {
+                if (fn == user.Firstname &&
+                    ln == user.Lastname)
+                {
+                    _db.Remove(user);
+                }
+            }
+
+        }
+
+
+        public int FindOrderWithIDs(int storenum, int pizzanum, int usernum)
+        {
+            var orders = _db.Order;
+
+            foreach (var order in orders)
+            {
+                if (storenum == order.StoreId && 
+                    pizzanum == order.PizzaId &&
+                    usernum  == order.UserId)
+                {
+                    return order.OrderId;
+                }
+            }
+
+            return -1;
+        }
+
+        public void FindOrderWithObjects(StoreLocation s, User u, Pizza p)
+        {
+            var orders = _db.Order;
+
+            foreach (var order in orders)
+            {
+                {
+                    _db.Order.Remove(order);
+                }
+            }
+
+        }
 
         public void Addorder(P.Order order)
         {

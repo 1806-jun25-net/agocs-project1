@@ -10,24 +10,27 @@ namespace PizzaLibrary.Classes
     {
         public Order() { }
 
+        public Order(User user, StoreLocation store, Pizza pizza, DateTime timeStamp)
+        {
+            User = user;
+            Store = store;
+            Pizza = pizza;
+            TimeStamp = timeStamp;
+        }
+
+        /*u, s, p, DateTime.Now);*/
+
         public int OrderId { get; set; }
         public int StoreId { get; set; }
         public int PizzaId { get; set; }
         public int UserId { get; set; }
-        public DateTime Ordertime { get; set; }
-        public int Numberofpizzas { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public Pizza Pizza { get; set; }
         public StoreLocation Store { get; set; }
         public User User { get; set; }
 
-        public Order(User user, StoreLocation loc, Pizza pizza, DateTime order)
-        {
-            this.User = user;
-            this.Store = loc;
-            this.Pizza = pizza;
 
-        }
 
 
         public static void OrderString(Pizza p, StoreLocation l, User u)
@@ -45,7 +48,7 @@ namespace PizzaLibrary.Classes
 
         }
 
-        //test done
+        //test 
         public static bool OrderValid(Order o, string orderLocationToBeMade)
         {
             bool ValidOrder = true;

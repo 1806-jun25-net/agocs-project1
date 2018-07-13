@@ -39,7 +39,27 @@ namespace ContextPizza
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
+                entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.Pizza)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.PizzaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKPizzaID");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKStoreID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FKUserID");
             });
 
             modelBuilder.Entity<Pizza>(entity =>

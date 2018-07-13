@@ -23,8 +23,6 @@ namespace PizzaUnitTester
         private static readonly StoreLocation GoodStore1 = new StoreLocation(10, 10, 10, 10, "reston");
         private static readonly StoreLocation BadStore1 = new StoreLocation(0, 20, 40, 3, "herndon");
         private static readonly StoreLocation BadStore2 = new StoreLocation(10, 2, 30, 0, "dullas");
-        private static readonly Order BadOrder1 = new Order(BadUser1, BadStore1, BadPizza1, DateTime.Now);
-        private static readonly Order GoodOrder2 = new Order(GoodUser1, GoodStore1, GoodPizza1, DateTime.Now);
 
         private static Random random = new Random();
         public static string RandomString(int length)
@@ -53,10 +51,8 @@ namespace PizzaUnitTester
             //int pizzaid = repository.findidwithpizza(goodpizza1);
             //int storeid = repository.findidwithstore(goodstore1);
 
-            Order o = new Order(GoodUser1, GoodStore1, GoodPizza1, DateTime.Now);
 
-            repository.Addorder(o);
-            repository.Save();
+
 
 
         }
@@ -87,16 +83,31 @@ namespace PizzaUnitTester
 
             int newUsrID = repository.Findidwithname(rs1, rs2);
 
-             Assert.Equal(rs3, repository.Findnamewithid(newUsrID));
+            Assert.Equal(rs3, repository.Findnamewithid(newUsrID));
 
 
         }
 
         [Fact]
-        public void DeleteUserFromDB()
+
+        public void ShouldAddOrderToDB()
         {
 
+            var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
+            IConfigurationRoot configuration = configBuilder.Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
+            var options = optionsBuilder.Options;
+            var dbContext = new ContextPizza.pizzadatabaseContext(options);
+            var repository = new pizzalibrary.pizzarepository(dbContext);
+
+            Order o = new Order(GoodUser1, GoodStore1, GoodPizza1, DateTime.Now);
+            repository.Addorder(o);
+            repository.Save();
         }
 
         [Fact]

@@ -21,6 +21,17 @@ namespace PizzaLibrary.Classes
             this.ingredientCount = ingredientCount;
         }
 
+        public Pizza(int hasPepperoni, int hasHam, int hasSausage, int hasHotsauce, double price, int ingredientCount, int numberofpizzas)
+        {
+            this.hasPepperoni = hasPepperoni;
+            this.hasHam = hasHam;
+            this.hasSausage = hasSausage;
+            this.hasHotsauce = hasHotsauce;
+            this.price = price;
+            this.ingredientCount = ingredientCount;
+            this.numberOfPizzas = numberOfPizzas;
+        }
+
 
         //If hasX = 1, then 'has', else has not
         public int hasPepperoni { get; set; } = 0;
@@ -28,10 +39,19 @@ namespace PizzaLibrary.Classes
         public int hasSausage { get; set; } = 0;
         public int hasHotsauce { get; set; } = 0;
         public double price { get; set; } = 12.50;
-        public int ingredientCount { get; set; } = 0;
+        public int ingredientCount { get; set; }
         public const int INGREDIENTAMOUNTMAX = 4;
+        public int numberOfPizzas { get; set; } = 1;
         public int PizzaID { get; set; }
 
+
+        public int countIngredients()
+        {
+
+            return hasHam + hasPepperoni +
+                   hasHotsauce + hasSausage;
+
+        }
 
         //test done
         public double CalculatePizzaCost (int numIngredients)
