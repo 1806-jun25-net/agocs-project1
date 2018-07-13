@@ -24,6 +24,7 @@ namespace ContextPizza
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=tcp:agocsamerica.database.windows.net,1433;Initial Catalog=pizzadatabase;Persist Security Info=False;User ID=agocs;Password=Password123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
@@ -39,24 +40,6 @@ namespace ContextPizza
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Pizza)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.PizzaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PizzaID_In_Order");
-
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.StoreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StoreID_In_Order");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserID_In_Order");
             });
 
             modelBuilder.Entity<Pizza>(entity =>
@@ -72,6 +55,8 @@ namespace ContextPizza
                 entity.Property(e => e.HasSausage).HasColumnName("hasSausage");
 
                 entity.Property(e => e.IngredientCount).HasColumnName("ingredientCount");
+
+                entity.Property(e => e.PizzaCount).HasColumnName("pizzaCount");
             });
 
             modelBuilder.Entity<StoreLocation>(entity =>

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
- <!-- document type declaration -->
+<!-- document type declaration -->
 <html lang="en-US">
- <!-- root element -->
+<!-- root element -->
 <head>
     <!-- metadata -->
     <meta charset="utf-8" /> <!-- declare the encoding of this file -->
@@ -14,43 +14,31 @@
 <body>
     <!-- page content -->
 
-
-    <div>
-
-        <h1>
-            Welcome to Expert Pizza.
-        </h1>
-
-
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <h2>@Html.ActionLink("Users", "Index", "UserController")</h2>
+                <em><small>Search for your account.</small></em>
+                <hr />
+            </div>
+            <div>
+                <h2>@Html.ActionLink("Pizzas", "Index", "PizzaController")</h2>
+                <em><small>See what pizzas were ordered.</small></em>
+                <hr />
+            </div>
+            <div>
+                <h2>@Html.ActionLink("Orders", "Index", "OrderController")</h2>
+                <em><small>See recent orders placed.</small></em>
+                <hr />
+            </div>
+            <div>
+                <h2>@Html.ActionLink("Store Locations", "Index", "StoreLocationController")</h2>
+                <em><small>See where a location is near you.</small></em>
+                <hr />
+            </div>
+        </div>
     </div>
 
-    <div>
-        <br />
-        <small>Make an order.</small>
-        <form>
 
-            <input id="makeOrder" type="submit" value="Order" />
-        </form>
-    </div>
-
-    <div>
-        <br />
-        <small>Enter a username and last name to search.</small>
-        <form>
-
-            <input id="usernameSearchField" type="text" />
-            <input id="searchUser" value="Search" type="submit" />
-        </form>
-    </div>
-
-    <div>
-        <br />
-        <small>Enter a location to search for orders made.</small>
-        <form>
-
-            <input id="locationSearchField" type="text" />
-            <input id="searchLocation" value="Search" type="submit" />
-        </form>
-    </div>
 </body>
 </html>
