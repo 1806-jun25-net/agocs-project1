@@ -14,31 +14,36 @@
 <body>
     <!-- page content -->
 
+    <hr />
+    <div class="jumbotron">
+
+        <h2>Welcome to Expert Pizza!</h2>
+        <h5>Where expert meets pizza.</h5>
+    </div>
+    <hr />
+
     <div class="container-fluid">
-        <div class="row">
-            <div>
-                <h2>@Html.ActionLink("Users", "Index", "UserController")</h2>
-                <em><small>Search for your account.</small></em>
-                <hr />
-            </div>
-            <div>
-                <h2>@Html.ActionLink("Pizzas", "Index", "PizzaController")</h2>
-                <em><small>See what pizzas were ordered.</small></em>
-                <hr />
-            </div>
-            <div>
-                <h2>@Html.ActionLink("Orders", "Index", "OrderController")</h2>
-                <em><small>See recent orders placed.</small></em>
-                <hr />
-            </div>
-            <div>
-                <h2>@Html.ActionLink("Store Locations", "Index", "StoreLocationController")</h2>
-                <em><small>See where a location is near you.</small></em>
-                <hr />
+            <div class="row">
+                <div>
+                    <h2>@Html.ActionLink("Users", "Index", "Users")</h2>
+                    <em><small>Search for your account.</small></em>
+                    <hr />
+                </div>
+                <div>
+                    <h2>@Html.ActionLink("Pizzas", "Index", "PizzaController")</h2>
+                    <em><small>See what pizzas were ordered.</small></em>
+                    <hr />
+                </div>
+                <div>
+                    <h2>@Html.ActionLink("Orders", "Index", "OrderController")</h2>
+                    <em><small>See recent orders placed.</small></em>
+                    <hr />
+                </div>
+                <div>
+                    <h2>@Html.ActionLink("Store Locations", "Index", "StoreLocationController")</h2>
+                    <em><small>See where a location is near you.</small></em>
+                </div>
             </div>
         </div>
-    </div>
-
-
 </body>
 </html>

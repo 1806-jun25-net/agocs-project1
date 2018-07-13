@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ContextPizza.StoreLocation>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pepperoni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sausage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hotsauce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pepperoni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sausage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hotsauce)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StoreId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StoreId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StoreId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

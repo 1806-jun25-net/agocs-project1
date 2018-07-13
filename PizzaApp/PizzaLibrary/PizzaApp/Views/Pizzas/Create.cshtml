@@ -1,0 +1,67 @@
+﻿@model ContextPizza.Pizza
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>Pizza</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="HasHotsauce" class="control-label"></label>
+                <input asp-for="HasHotsauce" class="form-control" />
+                <span asp-validation-for="HasHotsauce" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HasHam" class="control-label"></label>
+                <input asp-for="HasHam" class="form-control" />
+                <span asp-validation-for="HasHam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HasSausage" class="control-label"></label>
+                <input asp-for="HasSausage" class="form-control" />
+                <span asp-validation-for="HasSausage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HasPepperoni" class="control-label"></label>
+                <input asp-for="HasPepperoni" class="form-control" />
+                <span asp-validation-for="HasPepperoni" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IngredientCount" class="control-label"></label>
+                <input asp-for="IngredientCount" class="form-control" />
+                <span asp-validation-for="IngredientCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PizzaCount" class="control-label"></label>
+                <input asp-for="PizzaCount" class="form-control" />
+                <span asp-validation-for="PizzaCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>
