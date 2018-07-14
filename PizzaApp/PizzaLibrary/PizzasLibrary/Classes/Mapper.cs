@@ -19,6 +19,7 @@ namespace PizzaLibrary.Classes
             hasSausage = pizza.HasSausage,
             ingredientCount = pizza.IngredientCount
 
+
         };
 
         public static ContextPizza.Pizza Map(Pizza pizza) => new ContextPizza.Pizza

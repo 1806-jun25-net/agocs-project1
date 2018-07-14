@@ -39,6 +39,13 @@ namespace ExpertPizzaWebApp
             services.AddDbContext<UsersContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("pizzadatabase")));
 
+
+            services.AddDbContext<StoreLocationContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("pizzadatabase")));
+
+            services.AddDbContext<OrderContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("pizzadatabase")));
+
             services.AddDbContext<PizzaContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("pizzadatabase")));
 

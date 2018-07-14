@@ -9,22 +9,22 @@ using ExpertPizzaWebApp.Models;
 
 namespace ExpertPizzaWebApp.Controllers
 {
-    public class UsersController : Controller
+    public class StoreLocationsController : Controller
     {
-        private readonly UsersContext _context;
+        private readonly StoreLocationContext _context;
 
-        public UsersController(UsersContext context)
+        public StoreLocationsController(StoreLocationContext context)
         {
             _context = context;
         }
 
-        // GET: Users
+        // GET: StoreLocations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.StoreLocation.ToListAsync());
         }
 
-        // GET: Users/Details/5
+        // GET: StoreLocations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace ExpertPizzaWebApp.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserId == id);
-            if (user == null)
+            var storeLocation = await _context.StoreLocation
+                .FirstOrDefaultAsync(m => m.StoreId == id);
+            if (storeLocation == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(storeLocation);
         }
 
-        // GET: Users/Create
+        // GET: StoreLocations/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: StoreLocations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Firstname,Lastname,City,Ordertime")] User user)
+        public async Task<IActionResult> Create([Bind("Pepperoni,Sausage,Ham,Hotsauce,City")] StoreLocation storeLocation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(storeLocation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(storeLocation);
         }
 
-        // GET: Users/Edit/5
+        // GET: StoreLocations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace ExpertPizzaWebApp.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var storeLocation = await _context.StoreLocation.FindAsync(id);
+            if (storeLocation == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(storeLocation);
         }
 
-        // POST: Users/Edit/5
+        // POST: StoreLocations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Firstname,Lastname,City,Ordertime")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Pepperoni,Sausage,Ham,Hotsauce,City")] StoreLocation storeLocation)
         {
-            if (id != user.UserId)
+            if (id != storeLocation.StoreId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace ExpertPizzaWebApp.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(storeLocation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.UserId))
+                    if (!StoreLocationExists(storeLocation.StoreId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace ExpertPizzaWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(storeLocation);
         }
 
-        // GET: Users/Delete/5
+        // GET: StoreLocations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace ExpertPizzaWebApp.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserId == id);
-            if (user == null)
+            var storeLocation = await _context.StoreLocation
+                .FirstOrDefaultAsync(m => m.StoreId == id);
+            if (storeLocation == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(storeLocation);
         }
 
-        // POST: Users/Delete/5
+        // POST: StoreLocations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
+            var storeLocation = await _context.StoreLocation.FindAsync(id);
+            _context.StoreLocation.Remove(storeLocation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool StoreLocationExists(int id)
         {
-            return _context.User.Any(e => e.UserId == id);
+            return _context.StoreLocation.Any(e => e.StoreId == id);
         }
     }
 }

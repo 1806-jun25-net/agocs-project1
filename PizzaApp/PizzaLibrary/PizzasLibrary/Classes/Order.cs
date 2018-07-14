@@ -18,6 +18,13 @@ namespace PizzaLibrary.Classes
             TimeStamp = timeStamp;
         }
 
+        public Order(User user, StoreLocation store, Pizza pizza)
+        {
+            User = user;
+            Store = store;
+            Pizza = pizza;
+        }
+
         /*u, s, p, DateTime.Now);*/
 
         public int OrderId { get; set; }

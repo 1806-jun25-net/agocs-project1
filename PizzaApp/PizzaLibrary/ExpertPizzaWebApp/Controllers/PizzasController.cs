@@ -53,7 +53,7 @@ namespace ExpertPizzaWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PizzaId,HasHotsauce,HasHam,HasSausage,HasPepperoni,IngredientCount,PizzaCount")] Pizza pizza)
+        public async Task<IActionResult> Create([Bind("HasHotsauce,HasHam,HasSausage,HasPepperoni,IngredientCount,PizzaCount,Price")] Pizza pizza)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace ExpertPizzaWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PizzaId,HasHotsauce,HasHam,HasSausage,HasPepperoni,IngredientCount,PizzaCount")] Pizza pizza)
+        public async Task<IActionResult> Edit(int id, [Bind("HasHotsauce,HasHam,HasSausage,HasPepperoni,IngredientCount,PizzaCount,Price")] Pizza pizza)
         {
             if (id != pizza.PizzaId)
             {

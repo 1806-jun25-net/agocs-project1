@@ -99,7 +99,7 @@ namespace pizzalibrary
         }
 
 
-        public int FindOrderWithIDs(int storenum, int pizzanum, int usernum)
+        public Order FindOrderWithIDs(int storenum, int pizzanum, int usernum)
         {
             var orders = _db.Order;
 
@@ -109,11 +109,11 @@ namespace pizzalibrary
                     pizzanum == order.PizzaId &&
                     usernum  == order.UserId)
                 {
-                    return order.OrderId;
+                    //User user, StoreLocation store, Pizza pizza
                 }
             }
 
-            return -1;
+            return null;
         }
 
         public void FindOrderWithObjects(StoreLocation s, User u, Pizza p)

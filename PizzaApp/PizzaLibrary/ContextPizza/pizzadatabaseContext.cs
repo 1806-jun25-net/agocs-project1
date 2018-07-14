@@ -77,6 +77,8 @@ namespace ContextPizza
                 entity.Property(e => e.IngredientCount).HasColumnName("ingredientCount");
 
                 entity.Property(e => e.PizzaCount).HasColumnName("pizzaCount");
+
+                entity.Property(e => e.Price).HasColumnName("price");
             });
 
             modelBuilder.Entity<StoreLocation>(entity =>

@@ -15,5 +15,7 @@ namespace ExpertPizzaWebApp.Models
         public int HasPepperoni { get; set; }
         public int IngredientCount { get; set; }
         public int PizzaCount { get; set; }
+        public double? Price { get; set; }
+
     }
 }
