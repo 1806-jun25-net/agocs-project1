@@ -24,18 +24,17 @@ namespace ExpertPizzaWebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
-        public ActionResult Search(string fn, string ln)
+        public ActionResult Search(string fn, string ln, string city, DateTime ordertime)
         {
        
             var user = from u in _context.User select u;
 
-
-            if (!String.IsNullOrEmpty(fn) &&
-                !String.IsNullOrEmpty(ln))
-            {
-                user = _context.User.Where(u => (u.Firstname == fn) &&
-                                                (u.Lastname == ln));
-            }
+            user = _context.User.Where(u => (u.Firstname == fn) ||
+                                            (u.Lastname == ln)  ||
+                                            (u.City == city) ||
+                                            (u.Ordertime == ordertime));
+           
+            
 
             return View(user);
 
@@ -66,11 +65,9 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Firstname,Lastname,City,Ordertime")] User user)
+        public async Task<IActionResult> Create([Bind("First Name, Last Name, City, Order Time")] User user)
         {
             if (ModelState.IsValid)
             {

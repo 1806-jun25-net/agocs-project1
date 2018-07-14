@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ExpertPizzaWebApp.Models.Pizza>
+
+@{
+    ViewData["Title"] = "Sorting by cheapest";
+}
+
+<h2>Sorted by cheapest</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HasHotsauce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasHam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasSausage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasPepperoni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IngredientCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasHotsauce)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasHam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasSausage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasPepperoni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IngredientCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

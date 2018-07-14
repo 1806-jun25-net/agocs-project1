@@ -13,6 +13,6 @@ namespace ExpertPizzaWebApp.Models
         {
         }
 
-        public DbSet<ExpertPizzaWebApp.Models.StoreLocation> StoreLocation { get; set; }
+        public DbSet<StoreLocation> StoreLocation { get; set; }
     }
 }

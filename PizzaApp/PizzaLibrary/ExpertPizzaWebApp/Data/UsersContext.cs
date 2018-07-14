@@ -13,6 +13,6 @@ namespace ExpertPizzaWebApp.Models
         {
         }
 
-        public DbSet<ExpertPizzaWebApp.Models.User> User { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

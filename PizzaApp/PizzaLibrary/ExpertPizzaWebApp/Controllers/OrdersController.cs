@@ -38,6 +38,7 @@ namespace ExpertPizzaWebApp.Controllers
                 .Include(o => o.Store)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
+
             if (order == null)
             {
                 return NotFound();
@@ -60,7 +61,7 @@ namespace ExpertPizzaWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,PizzaId,StoreId,UserId,TimeStamp")] Order order)
+        public async Task<IActionResult> Create([Bind("PizzaId, StoreId, UserId, TimeStamp")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -94,11 +95,9 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         // POST: Orders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,PizzaId,StoreId,UserId,TimeStamp")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderId, PizzaId, StoreId, UserId, TimeStamp")] Order order)
         {
             if (id != order.OrderId)
             {

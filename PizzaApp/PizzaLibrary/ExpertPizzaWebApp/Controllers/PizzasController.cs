@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExpertPizzaWebApp.Models;
 
@@ -24,7 +21,7 @@ namespace ExpertPizzaWebApp.Controllers
             return View(await _context.Pizza.ToListAsync());
         }
 
-        // GET: Pizzas/Details/5
+        // GET: Pizzas/Details/id
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,8 +29,7 @@ namespace ExpertPizzaWebApp.Controllers
                 return NotFound();
             }
 
-            var pizza = await _context.Pizza
-                .FirstOrDefaultAsync(m => m.PizzaId == id);
+            var pizza = await _context.Pizza.FirstOrDefaultAsync(m => m.PizzaId == id);
             if (pizza == null)
             {
                 return NotFound();
@@ -48,12 +44,19 @@ namespace ExpertPizzaWebApp.Controllers
             return View();
         }
 
+        public ActionResult SortByCheapest()
+        {
+
+            var pizza = _context.Pizza.OrderByDescending(p => p.Price);
+            return View(pizza);
+        }
+
         // POST: Pizzas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HasHotsauce,HasHam,HasSausage,HasPepperoni,IngredientCount,PizzaCount,Price")] Pizza pizza)
+        public async Task<IActionResult> Create([Bind("Hotsauce, Ham, Sausage, Pepperoni, Ingredient Count, Pizza Count, Pizza Price")] Pizza pizza)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +88,7 @@ namespace ExpertPizzaWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HasHotsauce,HasHam,HasSausage,HasPepperoni,IngredientCount,PizzaCount,Price")] Pizza pizza)
+        public async Task<IActionResult> Edit(int id, [Bind("Hotsauce, Ham, Sausage, Pepperoni, Ingredient Count, Pizza Price")] Pizza pizza)
         {
             if (id != pizza.PizzaId)
             {
@@ -123,8 +126,7 @@ namespace ExpertPizzaWebApp.Controllers
                 return NotFound();
             }
 
-            var pizza = await _context.Pizza
-                .FirstOrDefaultAsync(m => m.PizzaId == id);
+            var pizza = await _context.Pizza.FirstOrDefaultAsync(m => m.PizzaId == id);
             if (pizza == null)
             {
                 return NotFound();

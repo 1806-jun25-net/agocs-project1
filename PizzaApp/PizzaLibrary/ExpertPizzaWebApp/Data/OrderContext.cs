@@ -13,6 +13,6 @@ namespace ExpertPizzaWebApp.Models
         {
         }
 
-        public DbSet<ExpertPizzaWebApp.Models.Order> Order { get; set; }
+        public DbSet<Order> Order { get; set; }
     }
 }

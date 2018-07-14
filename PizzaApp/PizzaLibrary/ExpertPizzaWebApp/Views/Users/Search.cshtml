@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<ExpertPizzaWebApp.Models.User>
 
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Search results";
 }
 
-<h2>Search</h2>
+<h2>Search results</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -41,11 +38,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ordertime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
             </td>
         </tr>
 }
