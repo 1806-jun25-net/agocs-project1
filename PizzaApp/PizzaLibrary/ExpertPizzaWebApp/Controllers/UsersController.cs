@@ -24,6 +24,23 @@ namespace ExpertPizzaWebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
+        public ActionResult Search(string fn, string ln)
+        {
+       
+            var user = from u in _context.User select u;
+
+
+            if (!String.IsNullOrEmpty(fn) &&
+                !String.IsNullOrEmpty(ln))
+            {
+                user = _context.User.Where(u => (u.Firstname == fn) &&
+                                                (u.Lastname == ln));
+            }
+
+            return View(user);
+
+        }
+
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
