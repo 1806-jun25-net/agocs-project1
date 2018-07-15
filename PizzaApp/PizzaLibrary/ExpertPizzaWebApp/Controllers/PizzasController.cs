@@ -47,7 +47,7 @@ namespace ExpertPizzaWebApp.Controllers
         public ActionResult SortByCheapest()
         {
 
-            var pizza = _context.Pizza.OrderByDescending(p => p.Price);
+            var pizza = _context.Pizza.OrderBy(p => p.Price);
             return View(pizza);
         }
 

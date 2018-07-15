@@ -9,6 +9,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@using (Html.BeginForm("SortByCheapest", "Pizzas", FormMethod.Get))
+{
+    <div>
+        <hr />
+        <input class="btn btn-default" type="submit" value="Sort by cheapest" />
+        <hr />
+    </div>
+}
 <table class="table">
     <thead>
         <tr>
@@ -37,35 +46,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasHotsauce)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasHam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasSausage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasPepperoni)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IngredientCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PizzaCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PizzaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PizzaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PizzaId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasHotsauce)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasHam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasSausage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasPepperoni)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PizzaCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PizzaId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PizzaId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PizzaId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

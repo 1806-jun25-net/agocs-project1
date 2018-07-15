@@ -45,7 +45,6 @@ namespace ExpertPizzaWebApp
             services.AddDbContext<PizzaContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("pizzadatabase")));
 
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
