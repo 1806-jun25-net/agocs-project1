@@ -29,9 +29,9 @@ namespace ExpertPizzaWebApp.Controllers
        
             var user = from u in _context.User select u;
 
-            user = _context.User.Where(u => (u.Firstname == fn) ||
+            user = _context.User.Where(u => (u.Firstname == fn) &&
                                             (u.Lastname == ln)  ||
-                                            (u.City == city));
+                                            (u.City == city)).Distinct();
            
             return View(user);
 

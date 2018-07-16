@@ -1,67 +1,19 @@
 ﻿@model IEnumerable<ExpertPizzaWebApp.Models.Order>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
 }
 
-<h2>Orders</h2>
-
-<p>
-    <hr />
-    <a asp-action="Create">Create new order</a>
-    <hr />
-</p>
-
-@using (Html.BeginForm("SortByExpensive", "Orders2", FormMethod.Get))
-{
-    <div>
-        <input class="btn btn-default" type="submit" value="Sort by most expensive" />
-    </div>
-    <br />
-}
-@using (Html.BeginForm("SortByCheapest", "Orders2", FormMethod.Get))
-{
-    <div>
-
-        <input class="btn btn-default" type="submit" value="Sort by cheapest" />
-    </div>
-    <br />
-}
-@using (Html.BeginForm("SortByMostRecent", "Orders2", FormMethod.Get))
-{
-    <div>
-
-        <input class="btn btn-default" type="submit" value="Sort by most recent" />
-    </div>
-}
-
-@using (Html.BeginForm("Search", "Orders2", FormMethod.Get))
-{
-    <br />
-    <h3>Search order history by</h3>
-    <br />
-    <div>
-        First Name &nbsp;   @Html.TextBox("fn")
-        Last  Name &nbsp;   @Html.TextBox("ln")
-        City &nbsp;  @Html.TextBox("city")
-    </div>
-
-    <div>
-        <hr />
-        <input class="btn btn-default" type="submit" value="Search" />
-    </div>
-}
-<hr />
-
+<h2>Search</h2>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Time Ordered
+                Price
             </th>
             <th>
-                Price
+                Time Ordered
             </th>
             <th>
                 Pizzas Ordered
@@ -84,10 +36,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                     $@Html.DisplayFor(modelItem => item.Pizza.Price)
                 </td>
                 <td>
-                    $@Html.DisplayFor(modelItem => item.Pizza.Price)
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Pizza.PizzaCount)
@@ -108,3 +60,6 @@
         }
     </tbody>
 </table>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -18,7 +18,7 @@ namespace ExpertPizzaWebApp.Controllers
         // GET: Pizzas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pizza.ToListAsync());
+            return View(await _context.Pizza.OrderByDescending(x => x.PizzaId).ToListAsync());
         }
 
         // GET: Pizzas/Details/id
@@ -38,7 +38,6 @@ namespace ExpertPizzaWebApp.Controllers
             return View(pizza);
         }
 
-        // GET: Pizzas/Create
         public IActionResult Create()
         {
             return View();
@@ -51,7 +50,6 @@ namespace ExpertPizzaWebApp.Controllers
             return View(pizza);
         }
 
-        // POST: Pizzas/Create
         [HttpPost]
         public async Task<IActionResult> Create([Bind("HasHotsauce, hasHam, hasSausage, HasPepperoni, PizzaCount")] Pizza pizza)
         {

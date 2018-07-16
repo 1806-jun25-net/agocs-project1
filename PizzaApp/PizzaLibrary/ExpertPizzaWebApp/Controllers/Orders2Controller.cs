@@ -61,6 +61,19 @@ namespace ExpertPizzaWebApp.Controllers
 
         }
 
+        public IActionResult Search(string fn, string ln, string city)
+        {
+
+            var orders = _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).Where(o => (o.User.Firstname == fn) &&
+                                              (o.User.Lastname == ln) || (o.User.City == city));
+
+
+
+
+            return View(orders);
+
+        }
+
         public IActionResult Create()
         {
             ViewData["PizzaId"] = new SelectList(_context.Set<Pizza>(), "PizzaId", "PizzaId");
