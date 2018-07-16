@@ -10,19 +10,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.HasHotsauce)
+                @Html.DisplayNameFor(model => model.HasHotsauce)?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasHam)
+                @Html.DisplayNameFor(model => model.HasHam)?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasSausage)
+                @Html.DisplayNameFor(model => model.HasSausage)?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasPepperoni)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IngredientCount)
+                @Html.DisplayNameFor(model => model.HasPepperoni)?
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PizzaCount)
@@ -49,13 +46,10 @@
                 @Html.DisplayFor(modelItem => item.HasPepperoni)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IngredientCount)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.PizzaCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                $@Html.DisplayFor(modelItem => item.Price)
             </td>
         </tr>
 }

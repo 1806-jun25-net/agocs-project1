@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ExpertPizzaWebApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Orders</h2>
+
+<p>
+    <hr />
+    <a asp-action="Create">Create new order</a>
+    <hr />
+</p>
+
+@using (Html.BeginForm("SortByExpensive", "Orders2", FormMethod.Get))
+{
+    <div>
+        <input class="btn btn-default" type="submit" value="Sort by most expensive" />
+    </div>
+    <br />
+}
+@using (Html.BeginForm("SortByCheapest", "Orders2", FormMethod.Get))
+{
+    <div>
+
+        <input class="btn btn-default" type="submit" value="Sort by cheapest" />
+    </div>
+    <br />
+}
+@using (Html.BeginForm("SortByMostRecent", "Orders2", FormMethod.Get))
+{
+    <div>
+
+        <input class="btn btn-default" type="submit" value="Sort by most recent" />
+    </div>
+}
+<hr />
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Time Ordered
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Pizzas Ordered
+            </th>
+            <th>
+                User First Name
+            </th>
+            <th>
+                User Last Name
+            </th>
+            <th>
+                User Location
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.Pizza.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pizza.PizzaCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.City)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,61 @@
+﻿@model ExpertPizzaWebApp.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Order time
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeStamp)
+        </dd>
+        <dt>
+            Order price
+        </dt>
+        <dd>
+            $@Html.DisplayFor(model => model.Pizza.Price)
+        </dd>
+        <dt>
+            Location ordered
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Store.City)
+        </dd>
+        <dt>
+            User first name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Firstname)
+        </dd>
+        <dt>
+            User last name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Lastname)
+        </dd>
+        <dt>
+            Pizzas ordered
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pizza.PizzaCount)
+        </dd>
+        <dt>
+            Store ordered from
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Store.City)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

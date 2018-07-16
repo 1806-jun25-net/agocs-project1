@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ExpertPizzaWebApp.Models.Order>
+
+@{
+    ViewData["Title"] = "SortByCheapest";
+}
+
+<h2>Sorting by cheapest</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <em>Price</em>
+            </th>
+            <th>
+                Time Ordered
+            </th>
+            <th>
+                Pizzas Ordered
+            </th>
+            <th>
+                User First Name
+            </th>
+            <th>
+                User Last Name
+            </th>
+            <th>
+                User Location
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <em> $@Html.DisplayFor(modelItem => item.Pizza.Price)</em>
+                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pizza.PizzaCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.City)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
