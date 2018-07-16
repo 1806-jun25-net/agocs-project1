@@ -15,15 +15,13 @@
 
 @using (Html.BeginForm("Search", "Users", FormMethod.Get))
 {
-<div class="input-group" >
-    <div class="form-group-lg">
-        <h3>Search for</h3>
+        <h3>Search for user</h3>
         <br />
-    </div>
-    First Name &nbsp;   @Html.TextBox("fn")
-    Last  Name &nbsp;   @Html.TextBox("ln")
-    City &nbsp;  @Html.TextBox("city")
-</div>
+        <div>
+            First Name &nbsp;   @Html.TextBox("fn")
+            Last  Name &nbsp;   @Html.TextBox("ln")
+            City &nbsp;  @Html.TextBox("city")
+        </div>
 
 <div>
     <hr />
@@ -43,10 +41,10 @@
                 @Html.DisplayNameFor(model => model.Lastname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                Preferred location
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ordertime)
+                User created on
             </th>
             <th></th>
         </tr>
@@ -68,9 +66,7 @@
                     @Html.DisplayFor(modelItem => item.Ordertime)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a> 
                 </td>
             </tr>
         }

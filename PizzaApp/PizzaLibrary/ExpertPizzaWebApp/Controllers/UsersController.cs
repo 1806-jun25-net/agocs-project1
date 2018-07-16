@@ -21,7 +21,7 @@ namespace ExpertPizzaWebApp.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.User.OrderByDescending(x => x.Ordertime).ToListAsync());
         }
 
         public ActionResult Search(string fn, string ln, string city, DateTime ordertime)

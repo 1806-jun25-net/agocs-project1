@@ -34,30 +34,33 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <em> @Html.DisplayFor(modelItem => item.TimeStamp)</em>
-            </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.Pizza.Price)
-            </td>
+            <tr>
+                <td>
+                    <em> @Html.DisplayFor(modelItem => item.TimeStamp)</em>
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.Pizza.Price)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Pizza.PizzaCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Lastname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.City)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pizza.PizzaCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.City)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

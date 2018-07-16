@@ -80,7 +80,7 @@ namespace ExpertPizzaWebApp.Controllers
             }
             ViewData["PizzaId"] = new SelectList(_context.Set<Pizza>(), "PizzaId", "PizzaId", order.PizzaId);
             ViewData["StoreId"] = new SelectList(_context.Set<StoreLocation>(), "StoreId", "StoreId", order.StoreId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "FirstName", order.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", order.UserId);
             return View(order);
         }
     }

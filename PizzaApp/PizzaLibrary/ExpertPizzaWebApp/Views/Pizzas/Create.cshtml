@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create a pizza</h2>
 
 <h4>Pizza</h4>
 <hr />
@@ -33,19 +33,9 @@
                 <span asp-validation-for="HasPepperoni" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IngredientCount" class="control-label"></label>
-                <input asp-for="IngredientCount" class="form-control" />
-                <span asp-validation-for="IngredientCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="PizzaCount" class="control-label"></label>
                 <input asp-for="PizzaCount" class="form-control" />
                 <span asp-validation-for="PizzaCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

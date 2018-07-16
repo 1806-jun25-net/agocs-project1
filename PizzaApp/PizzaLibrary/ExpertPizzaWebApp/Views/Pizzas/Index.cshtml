@@ -68,12 +68,7 @@
                     @Html.DisplayFor(modelItem => item.PizzaCount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.PizzaId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.PizzaId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PizzaId">Delete</a>
+                    $@Html.DisplayFor(modelItem => item.Price)
                 </td>
             </tr>
         }

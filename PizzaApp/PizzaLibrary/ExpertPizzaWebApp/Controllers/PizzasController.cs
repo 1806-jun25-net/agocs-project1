@@ -53,10 +53,15 @@ namespace ExpertPizzaWebApp.Controllers
 
         // POST: Pizzas/Create
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Hotsauce, Ham, Sausage, Pepperoni, Ingredient Count, Pizza Count, Pizza Price")] Pizza pizza)
+        public async Task<IActionResult> Create([Bind("HasHotsauce, hasHam, hasSausage, HasPepperoni, PizzaCount")] Pizza pizza)
         {
             if (ModelState.IsValid)
             {
+                pizza.IngredientCount = pizza.HasPepperoni +
+                                        pizza.HasSausage +
+                                        pizza.HasHotsauce +
+                                        pizza.HasHam;
+                pizza.Price = 12.50 + (pizza.IngredientCount * pizza.PizzaCount);
                 _context.Add(pizza);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

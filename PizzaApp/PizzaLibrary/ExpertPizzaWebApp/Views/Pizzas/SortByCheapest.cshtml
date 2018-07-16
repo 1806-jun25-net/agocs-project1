@@ -10,22 +10,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.HasHotsauce)?
+                <em> @Html.DisplayNameFor(model => model.Price)</em>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasHam)?
+                @Html.DisplayNameFor(model => model.HasHotsauce)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasSausage)?
+                @Html.DisplayNameFor(model => model.HasHam)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HasPepperoni)?
+                @Html.DisplayNameFor(model => model.HasSausage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasPepperoni)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PizzaCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th></th>
         </tr>
@@ -33,6 +33,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Price)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.HasHotsauce)
             </td>
@@ -48,10 +51,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PizzaCount)
             </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.Price)
-            </td>
         </tr>
 }
     </tbody>
 </table>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
