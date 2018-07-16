@@ -17,20 +17,20 @@ namespace ExpertPizzaWebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             var orderContext = _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User);
-            return View(await orderContext.ToListAsync());
+            return View(orderContext.ToList());
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).FirstOrDefaultAsync(m => m.OrderId == id);
+            var order = _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).FirstOrDefault(m => m.OrderId == id);
 
             if (order == null)
             {
@@ -40,28 +40,28 @@ namespace ExpertPizzaWebApp.Controllers
             return View(order);
         }
 
-        public IActionResult SortByExpensive()
+        public ActionResult SortByExpensive()
         {
             var orders =  _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).OrderByDescending(o => o.Pizza.Price);
             return View(orders);
 
         }
 
-        public IActionResult SortByCheapest()
+        public ActionResult SortByCheapest()
         {
             var orders = _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).OrderBy(o => o.Pizza.Price);
             return View(orders);
 
         }
 
-        public IActionResult SortByMostRecent()
+        public ActionResult SortByMostRecent()
         {
             var orders = _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).OrderByDescending(o => o.TimeStamp);
             return View(orders);
 
         }
 
-        public IActionResult Search(string fn, string ln, string city)
+        public ActionResult Search(string fn, string ln, string city)
         {
 
             var orders = _context.Order.Include(o => o.Pizza).Include(o => o.Store).Include(o => o.User).Where(o => (o.User.Firstname == fn) &&
@@ -74,7 +74,7 @@ namespace ExpertPizzaWebApp.Controllers
 
         }
 
-        public IActionResult Create()
+        public ActionResult Create()
         {
             ViewData["PizzaId"] = new SelectList(_context.Set<Pizza>(), "PizzaId", "PizzaId");
             ViewData["StoreId"] = new SelectList(_context.Set<StoreLocation>(), "StoreId", "StoreId");
@@ -83,12 +83,12 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("OrderId,PizzaId,StoreId,UserId,TimeStamp")] Order order)
+        public ActionResult Create([Bind("OrderId,PizzaId,StoreId,UserId,TimeStamp")] Order order)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(order);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PizzaId"] = new SelectList(_context.Set<Pizza>(), "PizzaId", "PizzaId", order.PizzaId);

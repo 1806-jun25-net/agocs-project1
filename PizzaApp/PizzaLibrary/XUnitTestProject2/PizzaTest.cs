@@ -33,31 +33,6 @@ namespace PizzaUnitTester
         }
 
         [Fact]
-        public void AddOrderToDb()
-        {
-            var configBuilder = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            IConfigurationRoot configuration = configBuilder.Build();
-
-            var optionsBuilder = new DbContextOptionsBuilder<ContextPizza.pizzadatabaseContext>(); //DbContext?
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("pizzadatabase"));
-            var options = optionsBuilder.Options;
-            var dbContext = new ContextPizza.pizzadatabaseContext(options);
-            var repository = new pizzalibrary.pizzarepository(dbContext);
-
-            //int newusrid = repository.findidwithname(rs1, rs2);
-            //int pizzaid = repository.findidwithpizza(goodpizza1);
-            //int storeid = repository.findidwithstore(goodstore1);
-
-
-
-
-
-        }
-
-        [Fact]
         public void AddUserToDb()
         {
             var configBuilder = new ConfigurationBuilder()
@@ -179,24 +154,6 @@ namespace PizzaUnitTester
 
         }
 
-        //[Fact]
-        //public void CheckPizzaValidityShouldReturnTrueIfPizzaValid()
-        //{
-
-        //    List<Order> lo = new List<Order>();
-        //    List<Order> lo2 = new List<Order>();
-        //    List<Order> lo3 = new List<Order>();
-        //    //this orderlist is invalid due to price
-        //    lo.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza1));
-        //    //this orderlist is invalid due to topping amount
-        //    lo2.Add(CreateTestOrders(BadUser2, BadStore2, BadPizza2));
-        //    //this orderlist should be valid
-        //    lo3.Add(CreateTestOrders(GoodUser2, GoodStore1, GoodPizza1));
-
-        //    Assert.False(BadPizza1.ValidPizzaOrder(BadPizza1, lo));
-
-        //}
-
         [Fact]
         public void CheckStoryInventoryShouldReturnTrueIfEmpty()
         {
@@ -204,14 +161,5 @@ namespace PizzaUnitTester
             Assert.False(GoodPizza1.CheckStoreInventory(GoodStore1));
         }
 
-        //[Fact]
-        //public void CheckIfOrderValidOnlyIfMadeWithin2Hours()
-        //{
-
-        //   Assert.True(Order.OrderValid(GoodOrder2, "reston"));
-        //   Assert.False(Order.OrderValid(BadOrder1, "herndon"));
-
-
-        //}
     }
 }

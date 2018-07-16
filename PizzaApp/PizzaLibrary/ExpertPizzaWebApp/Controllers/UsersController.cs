@@ -19,9 +19,9 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.User.OrderByDescending(x => x.Ordertime).ToListAsync());
+            return View(_context.User.OrderByDescending(x => x.Ordertime).ToList());
         }
 
         public ActionResult Search(string fn, string ln, string city, DateTime ordertime)
@@ -31,22 +31,22 @@ namespace ExpertPizzaWebApp.Controllers
 
             user = _context.User.Where(u => (u.Firstname == fn) &&
                                             (u.Lastname == ln)  ||
-                                            (u.City == city)).Distinct();
+                                            (u.City == city));
            
             return View(user);
 
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserId == id);
+            var user =  _context.User
+                .FirstOrDefault(m => m.UserId == id);
             if (user == null)
             {
                 return NotFound();
@@ -56,19 +56,19 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         // GET: Users/Create
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("UserId,Firstname,Lastname,City,Ordertime")] User user)
+        public ActionResult Create([Bind("UserId,Firstname,Lastname,City,Ordertime")] User user)
         {
             if (ModelState.IsValid)
             {
                 user.Ordertime = DateTime.Now;
                 _context.Add(user);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(user);

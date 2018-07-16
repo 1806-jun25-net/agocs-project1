@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ExpertPizzaWebApp.Models;
 
 namespace ExpertPizzaWebApp.Controllers
@@ -16,21 +14,21 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         // GET: StoreLocations
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.StoreLocation.ToListAsync());
+            return View(_context.StoreLocation.ToList());
         }
 
         // GET: StoreLocations/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var storeLocation = await _context.StoreLocation
-                .FirstOrDefaultAsync(m => m.StoreId == id);
+            var storeLocation = _context.StoreLocation
+                .FirstOrDefault(m => m.StoreId == id);
             if (storeLocation == null)
             {
                 return NotFound();

@@ -16,20 +16,20 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         // GET: Pizzas
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.Pizza.OrderByDescending(x => x.PizzaId).ToListAsync());
+            return View(_context.Pizza.OrderByDescending(x => x.PizzaId).ToList());
         }
 
         // GET: Pizzas/Details/id
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var pizza = await _context.Pizza.FirstOrDefaultAsync(m => m.PizzaId == id);
+            var pizza =  _context.Pizza.FirstOrDefault(m => m.PizzaId == id);
             if (pizza == null)
             {
                 return NotFound();
@@ -38,7 +38,7 @@ namespace ExpertPizzaWebApp.Controllers
             return View(pizza);
         }
 
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -51,7 +51,7 @@ namespace ExpertPizzaWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("HasHotsauce, hasHam, hasSausage, HasPepperoni, PizzaCount")] Pizza pizza)
+        public ActionResult Create([Bind("HasHotsauce, hasHam, hasSausage, HasPepperoni, PizzaCount")] Pizza pizza)
         {
             if (ModelState.IsValid)
             {
@@ -60,8 +60,9 @@ namespace ExpertPizzaWebApp.Controllers
                                         pizza.HasHotsauce +
                                         pizza.HasHam;
                 pizza.Price = 12.50 + (pizza.IngredientCount * pizza.PizzaCount);
+
                 _context.Add(pizza);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(pizza);
